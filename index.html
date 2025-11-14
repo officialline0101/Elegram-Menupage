@@ -525,7 +525,7 @@
         <p class="hero-sub">
           小顔矯正・美肌脱毛・ボディエステ・ブライダルまで。<br />
           Elegramがご提供するメニューをカテゴリ別にご覧いただけます。<br />
-          気になるメニュー名をタップすると、右側に〈詳細〉と〈料金〉が表示されます。
+          気になるメニュー名をタップすると、【MENU DETAIL】に〈詳細〉と〈料金〉が表示されます。
         </p>
       </div>
 <p class="header-note">
@@ -1275,6 +1275,7 @@
 
   <script>
   // カテゴリ切り替え
+  // カテゴリ切り替え
   document.addEventListener("DOMContentLoaded", () => {
     const tabs = document.querySelectorAll(".category-tab");
     const groups = document.querySelectorAll(".menu-group");
@@ -1285,7 +1286,21 @@
         tabs.forEach((t) => t.classList.remove("active"));
         groups.forEach((g) => g.classList.remove("active"));
         tab.classList.add("active");
-        document.getElementById(target).classList.add("active");
+        const activeGroup = document.getElementById(target);
+        activeGroup.classList.add("active");
+
+        // ▼ ここから追加：アクティブになったグループ内の「初回」見出しへスクロール
+        if (activeGroup) {
+          // 一番最初の .menu-subgroup-title（＝初回）を取得
+          const firstSubTitle = activeGroup.querySelector(".menu-subgroup-title");
+          if (firstSubTitle) {
+            firstSubTitle.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        }
+        // ▲ ここまで追加
 
         // メニュー選択状態リセット
         document
