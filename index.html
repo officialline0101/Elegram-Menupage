@@ -196,15 +196,27 @@
     /* ▼ スマホ用 詳細パネル (Bottom Sheet) ▼ */
     .mobile-bottom-sheet {
         position: fixed; top: auto; bottom: 0; left: 0; width: 100%; 
-        height: auto; max-height: 85vh; z-index: 2000;
+        height: auto; max-height: 85vh; 
+        z-index: 2000;
         background: #fff; border-radius: 24px 24px 0 0;
         transform: translateY(110%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        overflow-y: auto; -webkit-overflow-scrolling: touch;
         box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
-        display: flex; flex-direction: column;
+        
+        /* ★重要: ここでスクロールさせない。レイアウトコンテナにする */
+        display: flex; 
+        flex-direction: column;
+        overflow: hidden;
     }
     .mobile-bottom-sheet.show { transform: translateY(0); }
     @media (min-width: 961px) { .mobile-bottom-sheet { display: none; } }
+
+    /* ★重要: 中身のコンテンツエリアだけスクロールさせる */
+    #mobile-detail-content {
+        overflow-y: auto; 
+        -webkit-overflow-scrolling: touch;
+        flex: 1; /* 残りの高さを埋める */
+        width: 100%;
+    }
 
     /* 共通コンポーネント */
     .treatment-placeholder {
@@ -225,7 +237,9 @@
     }
 
     .treatment-container {
-      animation: slideIn 0.4s ease; display: flex; flex-direction: column; height: 100%;
+      animation: slideIn 0.4s ease; display: flex; flex-direction: column; 
+      /* min-height 100% にしてスクロール領域を確保 */
+      min-height: 100%;
     }
     @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -337,12 +351,14 @@
     }
     .overlay-bg.show { opacity: 1; pointer-events: auto; }
     
+    /* 閉じるボタン (スマホ用：パネルの枠組みに絶対配置) */
     .close-detail-btn {
       position: absolute; top: 16px; right: 16px; 
       background: rgba(255,255,255,0.9);
       border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 24px;
       display: flex; align-items: center; justify-content: center; color: #555;
-      cursor: pointer; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      cursor: pointer; z-index: 2001; /* コンテンツより前面に */
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     @media (min-width: 961px) { .close-detail-btn, .overlay-bg { display: none; } }
 
