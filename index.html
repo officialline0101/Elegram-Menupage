@@ -18,6 +18,7 @@
       --accent-dark: #8e7cc3;
       --text-main: #4a4a4a;
       --text-muted: #888888;
+      --line-color: #06c755; /* LINE Green */
       
       --radius-card: 24px;
       --radius-btn: 12px;
@@ -26,7 +27,6 @@
       --glass-panel: rgba(255, 255, 255, 0.95);
       --glass-shadow: 0 10px 40px -10px rgba(142, 124, 195, 0.15);
       
-      /* レスポンシブ用変数 */
       --shell-padding: 40px;
       --header-margin: 40px;
     }
@@ -44,7 +44,6 @@
       background: var(--bg-gradient);
       color: var(--text-main);
       line-height: 1.6;
-      /* オーバーレイ表示時にスクロールさせないための準備 */
       overflow-x: hidden;
     }
 
@@ -64,16 +63,13 @@
       border-radius: 32px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
       padding: var(--shell-padding);
-      /* 重要: ここにz-indexを設定しないことで、body直下のモーダルが上にくるようにする */
       position: relative;
       z-index: 1; 
     }
-    
     @media (max-width: 768px) { .shell { border-radius: 20px; } }
 
     /* ヘッダー */
     .header { text-align: center; margin-bottom: var(--header-margin); }
-    
     .salon-badge {
       display: inline-block; padding: 6px 16px;
       background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
@@ -81,7 +77,6 @@
       letter-spacing: 0.15em; border-radius: 50px; margin-bottom: 12px;
       box-shadow: 0 4px 10px rgba(142, 197, 252, 0.4);
     }
-    
     .hero-title {
       font-size: 28px; font-weight: 500; margin: 0 0 12px;
       color: var(--accent-dark); letter-spacing: 0.05em;
@@ -92,13 +87,11 @@
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
     .hero-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
-    
     @media (max-width: 480px) {
         .hero-title { font-size: 22px; }
         .hero-sub { font-size: 12px; margin-bottom: 20px; }
         .hero-sub br { display: none; }
     }
-
     .reserve-link {
       display: inline-block; text-decoration: none;
       background: var(--accent-dark); color: #fff;
@@ -115,9 +108,7 @@
     .menu-layout {
       display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: start;
     }
-    @media (max-width: 960px) { 
-        .menu-layout { display: block; } 
-    }
+    @media (max-width: 960px) { .menu-layout { display: block; } }
 
     /* カテゴリタブ */
     .category-tabs {
@@ -128,8 +119,6 @@
       padding: 12px; border-radius: 20px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.03);
     }
-    
-    /* スマホ用横スクロール */
     @media (max-width: 768px) {
         .category-tabs {
             flex-wrap: nowrap; overflow-x: auto;
@@ -139,7 +128,6 @@
         .category-tabs::-webkit-scrollbar { display: none; }
         .category-tabs::before, .category-tabs::after { content: ''; display: block; width: 8px; flex-shrink: 0; }
     }
-
     .category-tab {
       border: 1px solid transparent; background: #fcfcfc;
       padding: 8px 14px; border-radius: 50px; font-size: 13px;
@@ -150,7 +138,6 @@
     }
     .category-tab span { font-size: 10px; opacity: 0.5; text-transform: uppercase; font-weight: 700; }
     .category-tab:hover { background: #fff; transform: translateY(-2px); color: var(--accent-dark); }
-    .category-tab:active { transform: translateY(0); }
     .category-tab.active {
       background: var(--accent-dark); color: #fff;
       box-shadow: 0 4px 12px rgba(142, 124, 195, 0.4);
@@ -172,13 +159,7 @@
       background: #f0ebf8; padding: 2px 8px; border-radius: 4px;
     }
 
-    .menu-subgroup { margin-bottom: 32px; }
-    .menu-subgroup-title {
-      font-size: 13px; font-weight: 700; color: var(--text-main);
-      margin-bottom: 12px; padding-left: 10px;
-      border-left: 3px solid var(--accent); display: inline-block;
-    }
-    .menu-list { display: grid; gap: 10px; }
+    .menu-list { display: grid; gap: 10px; margin-bottom: 30px; }
 
     .menu-item-btn {
       width: 100%; text-align: left; background: rgba(255,255,255,0.7);
@@ -190,7 +171,6 @@
       touch-action: manipulation;
     }
     @media (max-width: 480px) { .menu-item-btn { padding: 14px 16px; font-size: 13px; } }
-
     .menu-item-btn:hover {
       transform: translateX(4px); background: #fff;
       box-shadow: 0 4px 12px rgba(180, 180, 200, 0.2); color: var(--accent-dark);
@@ -202,44 +182,29 @@
     }
     .chevron { font-size: 14px; opacity: 0.3; }
 
-    /* * ▼ PC用 詳細パネル (Sticky) ▼ 
-     * スマホでは非表示にする
-     */
+    /* ▼ PC用 詳細パネル (Sticky) ▼ */
     .pc-detail-panel {
       background: var(--glass-panel); 
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-radius: 30px; padding: 0; box-shadow: var(--glass-shadow);
-      position: sticky; top: 80px;
-      border: 1px solid #fff;
+      position: sticky; top: 80px; border: 1px solid #fff;
       overflow: hidden; min-height: 400px;
       display: flex; flex-direction: column;
     }
-    @media (max-width: 960px) {
-        .pc-detail-panel { display: none; }
-    }
+    @media (max-width: 960px) { .pc-detail-panel { display: none; } }
 
-    /* * ▼ スマホ用 詳細パネル (Bottom Sheet) ▼ 
-     * body直下に配置し、z-indexで最前面に出す
-     */
+    /* ▼ スマホ用 詳細パネル (Bottom Sheet) ▼ */
     .mobile-bottom-sheet {
         position: fixed; top: auto; bottom: 0; left: 0; width: 100%; 
-        height: auto; max-height: 85vh; /* 画面の85% */
-        z-index: 2000; /* ★オーバーレイ(999)より確実に上にする */
-        
-        background: #fff;
-        border-radius: 24px 24px 0 0;
-        transform: translateY(110%); /* 初期は隠す */
-        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        height: auto; max-height: 85vh; z-index: 2000;
+        background: #fff; border-radius: 24px 24px 0 0;
+        transform: translateY(110%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         overflow-y: auto; -webkit-overflow-scrolling: touch;
         box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
         display: flex; flex-direction: column;
     }
-    .mobile-bottom-sheet.show {
-        transform: translateY(0);
-    }
-    @media (min-width: 961px) {
-        .mobile-bottom-sheet { display: none; }
-    }
+    .mobile-bottom-sheet.show { transform: translateY(0); }
+    @media (min-width: 961px) { .mobile-bottom-sheet { display: none; } }
 
     /* 共通コンポーネント */
     .treatment-placeholder {
@@ -266,31 +231,56 @@
 
     .treatment-image-wrapper { position: relative; width: 100%; height: 250px; overflow: hidden; flex-shrink: 0; }
     .treatment-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-    /* PCのみホバーエフェクト */
     @media (min-width: 961px) { .pc-detail-panel:hover .treatment-image { transform: scale(1.05); } }
-    
-    /* スマホは画像を少し小さく */
     @media (max-width: 960px) { .treatment-image-wrapper { height: 220px; } }
 
     .treatment-content {
       padding: 30px; background: #fff; flex: 1; display: flex; flex-direction: column; position: relative;
     }
-    /* スマホの下部余白確保（価格タグが隠れないように） */
-    @media (max-width: 960px) { .treatment-content { padding: 24px 20px 60px 20px; } }
+    @media (max-width: 960px) { .treatment-content { padding: 24px 20px 40px 20px; } }
 
     .treatment-content::before {
       content: ''; position: absolute; top: -20px; left: 0; right: 0; height: 30px;
       background: #fff; border-radius: 30px 30px 0 0; z-index: 1;
     }
-    .treatment-header { position: relative; z-index: 2; margin-bottom: 20px; text-align: center; }
+
+    .treatment-header { position: relative; z-index: 2; margin-bottom: 16px; text-align: center; }
     .treatment-title {
       font-size: 22px; font-weight: 500; color: var(--text-main); margin: 0 0 8px; line-height: 1.4;
     }
     @media (max-width: 480px) { .treatment-title { font-size: 20px; } }
-
     .treatment-divider {
       width: 40px; height: 3px; background: linear-gradient(90deg, #b19cd9, #8ec5fc); margin: 10px auto 0;
     }
+
+    /* ▼ 切り替えスイッチ ▼ */
+    .price-toggle-container {
+        display: flex;
+        background: #f0ebf8;
+        padding: 4px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 2;
+    }
+    .price-toggle-btn {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .price-toggle-btn.active {
+        background: #fff;
+        color: var(--accent-dark);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
     .treatment-info-box {
       background: #f9f7fc; border: 1px solid rgba(177, 156, 217, 0.2);
       padding: 20px; border-radius: 16px; margin-bottom: 24px; position: relative; z-index: 2;
@@ -302,34 +292,57 @@
       background: linear-gradient(135deg, #fff 0%, #fefefe 100%);
       color: var(--accent-dark); padding: 16px; text-align: center;
       border-radius: 16px; border: 2px solid #f0ebf8;
-      box-shadow: 0 8px 20px rgba(142, 124, 195, 0.1); transition: transform 0.2s;
+      box-shadow: 0 8px 20px rgba(142, 124, 195, 0.1); margin-bottom: 16px;
     }
-    .price-tag:hover { transform: translateY(-2px); border-color: var(--accent); }
     .price-label {
-      display: block; font-size: 11px; color: var(--text-muted);
-      letter-spacing: 0.1em; margin-bottom: 4px; font-weight: 700; text-transform: uppercase;
+        display: block; font-size: 11px; color: var(--text-muted);
+        letter-spacing: 0.1em; margin-bottom: 4px; font-weight: 700; text-transform: uppercase;
     }
     .price-value { font-size: 20px; font-weight: 700; color: var(--accent-dark); display: block; }
 
-    /* オーバーレイ (黒いもや) */
+    /* ▼ LINE予約ボタン ▼ */
+    .line-reserve-btn {
+        display: block;
+        width: 100%;
+        background: var(--line-color);
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        padding: 16px;
+        border-radius: 16px;
+        font-weight: 700;
+        font-size: 16px;
+        box-shadow: 0 4px 12px rgba(6, 199, 85, 0.3);
+        transition: transform 0.2s;
+        position: relative;
+        z-index: 2;
+    }
+    .line-reserve-btn:active { transform: scale(0.98); }
+    .line-reserve-btn::before {
+        content: '';
+        display: inline-block;
+        width: 20px; height: 20px;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M22.288 10.457c0-5.188-5.145-9.457-11.288-9.457-6.145 0-11.288 4.269-11.288 9.457 0 4.673 4.14 8.618 9.467 9.324-.413 1.547-1.427 4.238-1.507 4.509-.133.454.267.893.72.36 0 0 5.467-5.275 6.4-6.4 3.733-.507 6.493-2.907 6.493-5.933'/%3E%3C/svg%3E") no-repeat center/contain;
+        vertical-align: text-bottom;
+        margin-right: 8px;
+    }
+
+    /* オーバーレイ */
     .overlay-bg {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(40, 40, 50, 0.6); 
-      z-index: 1500; /* ★Shell(1)より上、Bottom Sheet(2000)より下 */
-      opacity: 0; pointer-events: none;
+      z-index: 1500; opacity: 0; pointer-events: none;
       transition: opacity 0.3s; 
       backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
     }
     .overlay-bg.show { opacity: 1; pointer-events: auto; }
     
-    /* 閉じるボタン (スマホ用) */
     .close-detail-btn {
       position: absolute; top: 16px; right: 16px; 
       background: rgba(255,255,255,0.9);
       border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 24px;
       display: flex; align-items: center; justify-content: center; color: #555;
-      cursor: pointer; z-index: 10; 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      cursor: pointer; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     @media (min-width: 961px) { .close-detail-btn, .overlay-bg { display: none; } }
 
@@ -341,8 +354,7 @@
 
   <div id="mobile-bottom-sheet" class="mobile-bottom-sheet">
     <button class="close-detail-btn" onclick="closeDetail()">×</button>
-    <div id="mobile-detail-content">
-        </div>
+    <div id="mobile-detail-content"></div>
   </div>
 
   <div class="shell">
@@ -372,220 +384,104 @@
 
         <div id="cat-kogao" class="menu-group active">
           <div class="menu-group-title">小顔矯正リフトアップ <span>FACE LIFT</span></div>
-          <div class="menu-subgroup">
-            <div class="menu-subgroup-title">初回</div>
-            <div class="menu-list">
-              <button class="menu-item-btn" onclick="openDetail('treatment1')">リフトアップコース <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment2')">むくみデトックスコース <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment3')">脂肪分解コース <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment4')">切らない系リフトコース <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment5')">プレミアムリフトアップ <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment6')">瞬間小顔ECSコース <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment7')">ラジオ波リフトアップ <span class="chevron">›</span></button>
-            </div>
-          </div>
-          <div class="menu-subgroup">
-            <div class="menu-subgroup-title">2回目以降</div>
-            <div class="menu-list">
-               <button class="menu-item-btn" onclick="openDetail('treatment58')">リフトアップコース <span class="chevron">›</span></button>
-               <button class="menu-item-btn" onclick="openDetail('treatment59')">むくみデトックスコース <span class="chevron">›</span></button>
-               <button class="menu-item-btn" onclick="openDetail('treatment60')">脂肪分解コース <span class="chevron">›</span></button>
-               <button class="menu-item-btn" onclick="openDetail('treatment61')">切らない系リフトコース <span class="chevron">›</span></button>
-               <button class="menu-item-btn" onclick="openDetail('treatment62')">プレミアムリフトアップ <span class="chevron">›</span></button>
-               <button class="menu-item-btn" onclick="openDetail('treatment63')">瞬間小顔ECSコース <span class="chevron">›</span></button>
-               <button class="menu-item-btn" onclick="openDetail('treatment64')">ラジオ波リフトアップ <span class="chevron">›</span></button>
-            </div>
+          <div class="menu-list">
+              <button class="menu-item-btn" onclick="openDetail('kogao_lift')">リフトアップコース <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('kogao_detox')">むくみデトックスコース <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('kogao_fat')">脂肪分解コース <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('kogao_nonsurg')">切らない系リフトコース <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('kogao_premium')">プレミアムリフトアップ <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('kogao_ecs')">瞬間小顔ECSコース <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('kogao_radio')">ラジオ波リフトアップ <span class="chevron">›</span></button>
           </div>
         </div>
 
         <div id="cat-datsumo" class="menu-group">
           <div class="menu-group-title">美肌脱毛 <span>HAIR REMOVAL</span></div>
-          <div class="menu-subgroup">
-            <div class="menu-subgroup-title">初回</div>
-            <div class="menu-list">
-              <button class="menu-item-btn" onclick="openDetail('treatment8')">全身脱毛＋顔＋VIO <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment9')">全身脱毛＋顔ありVIOなし <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment10')">全身脱毛＋顔なしVIOあり <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment11')">全身脱毛のみ <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment12')">Sパーツ(両ワキなど) <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment13')">Mパーツ <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment14')">Lパーツ <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment15')">VIOセット <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment16')">顔脱毛 <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment17')">男性ヒゲ脱毛 <span class="chevron">›</span></button>
-              <button class="menu-item-btn" onclick="openDetail('treatment18')">キッズ脱毛 <span class="chevron">›</span></button>
-            </div>
-          </div>
-          <div class="menu-subgroup">
-            <div class="menu-subgroup-title">2回目以降</div>
-            <div class="menu-list">
-                <button class="menu-item-btn" onclick="openDetail('treatment65')">全身脱毛＋顔＋VIO <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment66')">全身脱毛＋顔ありVIOなし <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment67')">全身脱毛＋顔なしVIOあり <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment68')">全身脱毛のみ <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment69')">Sパーツ <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment70')">Mパーツ <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment71')">Lパーツ <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment72')">VIOセット <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment73')">顔脱毛 <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment74')">男性ヒゲ脱毛 <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment75')">キッズ脱毛 <span class="chevron">›</span></button>
-            </div>
+          <div class="menu-list">
+              <button class="menu-item-btn" onclick="openDetail('datsumo_full_vio_face')">全身脱毛＋顔＋VIO <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('datsumo_full_face')">全身脱毛＋顔ありVIOなし <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('datsumo_full_vio')">全身脱毛＋顔なしVIOあり <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('datsumo_full')">全身脱毛のみ <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('datsumo_s')">Sパーツ(両ワキなど) <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('datsumo_m')">Mパーツ <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('datsumo_l')">Lパーツ <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('datsumo_vio')">VIOセット <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('datsumo_face')">顔脱毛 <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('datsumo_men')">男性ヒゲ脱毛 <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('datsumo_kids')">キッズ脱毛 <span class="chevron">›</span></button>
           </div>
         </div>
 
         <div id="cat-peeling" class="menu-group">
             <div class="menu-group-title">お悩み別ピーリング <span>PEELING</span></div>
-            <div class="menu-subgroup">
-              <div class="menu-subgroup-title">初回</div>
-              <div class="menu-list">
-                <button class="menu-item-btn" onclick="openDetail('treatment19')">肌再生ハーブピーリング(HAAB) <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment20')">肌再生ハーブピーリング(剥離あり) <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment21')">エクソソームピーリング <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment22')">赤み/敏感肌ピーリング <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment23')">ニキビ/ニキビ跡ハーブピーリング <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment24')">美白くすみピーリング <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment25')">アンチエイジングピーリング <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment26')">陶肌トリートメント <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment27')">ガリレオピーリング <span class="chevron">›</span></button>
+            <div class="menu-list">
+                <button class="menu-item-btn" onclick="openDetail('peel_haab')">肌再生ハーブピーリング(HAAB) <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('peel_haab_hard')">肌再生ハーブピーリング(剥離あり) <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('peel_exo')">エクソソームピーリング <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('peel_sens')">赤み/敏感肌ピーリング <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('peel_acne')">ニキビ/ニキビ跡ハーブピーリング <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('peel_white')">美白くすみピーリング <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('peel_aging')">アンチエイジングピーリング <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('peel_touki')">陶肌トリートメント <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('peel_galileo')">ガリレオピーリング <span class="chevron">›</span></button>
                 
                 <div style="margin:16px 0 8px 8px; font-weight:700; font-size:12px; color:#888;">毛穴・肌質改善</div>
-                <button class="menu-item-btn" onclick="openDetail('treatment28')">毛穴洗浄コース <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment29')">毛穴洗浄ピーリングコース <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment30')">光フォト美肌(ベーシック) <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment31')">光フォト美肌(スタンダード) <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment32')">光フォト美肌(プレミアム) <span class="chevron">›</span></button>
-              </div>
-            </div>
-            <div class="menu-subgroup">
-                <div class="menu-subgroup-title">2回目以降</div>
-                <div class="menu-list">
-                    <button class="menu-item-btn" onclick="openDetail('treatment76')">肌再生ハーブピーリング(HAAB) <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment77')">肌再生ハーブピーリング(剥離あり) <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment78')">エクソソームピーリング <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment79')">赤み/敏感肌ピーリング <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment80')">ニキビ/ニキビ跡ハーブピーリング <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment81')">美白くすみピーリング <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment82')">アンチエイジングピーリング <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment83')">陶肌トリートメント <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment84')">ガリレオピーリング <span class="chevron">›</span></button>
-                    
-                    <div style="margin:16px 0 8px 8px; font-weight:700; font-size:12px; color:#888;">毛穴・肌質改善</div>
-                    <button class="menu-item-btn" onclick="openDetail('treatment85')">毛穴洗浄コース <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment86')">毛穴洗浄ピーリングコース <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment87')">光フォト美肌(ベーシック) <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment88')">光フォト美肌(スタンダード) <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment89')">光フォト美肌(プレミアム) <span class="chevron">›</span></button>
-                </div>
+                <button class="menu-item-btn" onclick="openDetail('pore_wash')">毛穴洗浄コース <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('pore_wash_peel')">毛穴洗浄ピーリングコース <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('pore_photo_b')">光フォト美肌(ベーシック) <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('pore_photo_s')">光フォト美肌(スタンダード) <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('pore_photo_p')">光フォト美肌(プレミアム) <span class="chevron">›</span></button>
             </div>
         </div>
 
         <div id="cat-body" class="menu-group">
             <div class="menu-group-title">ボディエステ <span>BODY</span></div>
-            <div class="menu-subgroup">
-              <div class="menu-subgroup-title">初回</div>
-              <div class="menu-list">
-                <button class="menu-item-btn" onclick="openDetail('treatment33')">全身痩せコース <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment34')">お腹痩せコース <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment35')">上半身痩せコース <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment36')">下半身痩せコース <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment37')">お腹ぽっこりメソット <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment38')">バストアップコース <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment39')">ヒップアップコース <span class="chevron">›</span></button>
-              </div>
-            </div>
-            <div class="menu-subgroup">
-                <div class="menu-subgroup-title">2回目以降</div>
-                <div class="menu-list">
-                    <button class="menu-item-btn" onclick="openDetail('treatment90')">全身痩せコース <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment91')">お腹痩せコース <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment92')">上半身痩せコース <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment93')">下半身痩せコース <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment94')">お腹ぽっこりメソット <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment95')">バストアップコース <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment96')">ヒップアップコース <span class="chevron">›</span></button>
-                </div>
+            <div class="menu-list">
+                <button class="menu-item-btn" onclick="openDetail('body_full')">全身痩せコース <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('body_stomach')">お腹痩せコース <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('body_upper')">上半身痩せコース <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('body_lower')">下半身痩せコース <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('body_pokkori')">お腹ぽっこりメソット <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('body_bust')">バストアップコース <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('body_hip')">ヒップアップコース <span class="chevron">›</span></button>
             </div>
         </div>
 
         <div id="cat-relax" class="menu-group">
             <div class="menu-group-title">リラクゼーション <span>RELAXATION</span></div>
-            <div class="menu-subgroup">
-              <div class="menu-subgroup-title">初回</div>
-              <div class="menu-list">
-                <button class="menu-item-btn" onclick="openDetail('treatment40')">全身オイルリンパ(60分) <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment41')">全身オイルリンパ(90分) <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment42')">首・肩マッサージコース <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment43')">ふくらはぎスッキリ <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment44')">腰痛マッサージコース <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment45')">打たない肩ボトックス <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment46')">自律神経改善コース <span class="chevron">›</span></button>
-              </div>
-            </div>
-            <div class="menu-subgroup">
-                <div class="menu-subgroup-title">2回目以降</div>
-                <div class="menu-list">
-                    <button class="menu-item-btn" onclick="openDetail('treatment97')">全身オイルリンパ(60分) <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment98')">全身オイルリンパ(90分) <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment99')">首・肩マッサージコース <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment100')">ふくらはぎスッキリ <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment101')">腰痛マッサージコース <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment102')">打たない肩ボトックス <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment103')">自律神経改善コース <span class="chevron">›</span></button>
-                </div>
+            <div class="menu-list">
+                <button class="menu-item-btn" onclick="openDetail('relax_oil60')">全身オイルリンパ(60分) <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('relax_oil90')">全身オイルリンパ(90分) <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('relax_neck')">首・肩マッサージコース <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('relax_calf')">ふくらはぎスッキリ <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('relax_waist')">腰痛マッサージコース <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('relax_shoulder')">打たない肩ボトックス <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('relax_nerve')">自律神経改善コース <span class="chevron">›</span></button>
             </div>
         </div>
 
         <div id="cat-eyebrow" class="menu-group">
             <div class="menu-group-title">眉毛スタイリング <span>EYEBROW</span></div>
-            <div class="menu-subgroup">
-              <div class="menu-subgroup-title">初回</div>
-              <div class="menu-list">
-                <button class="menu-item-btn" onclick="openDetail('treatment47')">HBL(ハリウッドブロウ) <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment48')">眉毛スタイリング <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment49')">眉毛＋WAX脱毛 <span class="chevron">›</span></button>
-              </div>
-            </div>
-            <div class="menu-subgroup">
-                <div class="menu-subgroup-title">2回目以降</div>
-                <div class="menu-list">
-                    <button class="menu-item-btn" onclick="openDetail('treatment104')">HBL(ハリウッドブロウ) <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment105')">眉毛スタイリング <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment106')">眉毛＋WAX脱毛 <span class="chevron">›</span></button>
-                </div>
+            <div class="menu-list">
+                <button class="menu-item-btn" onclick="openDetail('eye_hbl')">HBL(ハリウッドブロウ) <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('eye_style')">眉毛スタイリング <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('eye_wax')">眉毛＋WAX脱毛 <span class="chevron">›</span></button>
             </div>
         </div>
 
         <div id="cat-bridal" class="menu-group">
             <div class="menu-group-title">ブライダルエステ <span>BRIDAL</span></div>
-            <div class="menu-subgroup">
-              <div class="menu-subgroup-title">初回</div>
-              <div class="menu-list">
-                <button class="menu-item-btn" onclick="openDetail('treatment50')">無料ブライダル相談 <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment51')">小顔フェイシャル <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment52')">美白フェイシャル <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment53')">小顔×美肌フェイシャル <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment54')">二の腕スッキリコース <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment55')">背中ニキビ美白コース <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment56')">フェイシャル×ボディー <span class="chevron">›</span></button>
-                <button class="menu-item-btn" onclick="openDetail('treatment57')">歯のホワイトニング <span class="chevron">›</span></button>
-              </div>
-            </div>
-            <div class="menu-subgroup">
-                <div class="menu-subgroup-title">2回目以降</div>
-                <div class="menu-list">
-                    <button class="menu-item-btn" onclick="openDetail('treatment107')">無料ブライダル相談 <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment108')">小顔フェイシャル <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment109')">美白フェイシャル <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment110')">小顔×美肌フェイシャル <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment111')">二の腕スッキリコース <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment112')">背中ニキビ美白コース <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment113')">フェイシャル×ボディー <span class="chevron">›</span></button>
-                    <button class="menu-item-btn" onclick="openDetail('treatment114')">歯のホワイトニング <span class="chevron">›</span></button>
-                </div>
+            <div class="menu-list">
+                <button class="menu-item-btn" onclick="openDetail('bridal_consult')">無料ブライダル相談 <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('bridal_kogao')">小顔フェイシャル <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('bridal_white')">美白フェイシャル <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('bridal_mix')">小顔×美肌フェイシャル <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('bridal_arm')">二の腕スッキリコース <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('bridal_back')">背中ニキビ美白コース <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('bridal_total')">フェイシャル×ボディー <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('bridal_teeth')">歯のホワイトニング <span class="chevron">›</span></button>
             </div>
         </div>
-
       </section>
 
       <aside class="pc-detail-panel" id="pc-detail-panel">
@@ -606,461 +502,377 @@
   <script>
     /**
      * ▼ メニューデータ管理 ▼
+     * price_1: 初回料金, price_2: 2回目以降
      */
     const MENU_DATA = {
-        /* =========================================
-           ▼ 小顔矯正リフトアップ (Face Lift)
-           ========================================= */
-        'treatment1': {
+        // --- 小顔 ---
+        'kogao_lift': {
             title: 'リフトアップコース',
             desc: '当店人気No.1。小顔矯正で輪郭矯正し、即効性のある小顔に！',
-            price: '初回料金：4,400円',
+            price_1: '4,400円', price_2: '8,800円',
             img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment2': {
+        'kogao_detox': {
             title: 'むくみデトックスコース',
             desc: '小顔矯正＋顔、首、肩、デコルテのオイルトリートメント！',
-            price: '初回料金：11,000円',
+            price_1: '11,000円', price_2: '14,300円',
             img: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment3': {
+        'kogao_fat': {
             title: '脂肪分解コース',
             desc: '小顔矯正＋脂肪分解ラジオ波でV字輪郭！',
-            price: '初回料金：13,200円',
+            price_1: '13,200円', price_2: '16,500円',
             img: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment4': {
+        'kogao_nonsurg': {
             title: '切らない系リフトコース',
             desc: '小顔矯正＋高周波ECSリフトアップで瞬間小顔！肌のハリ艶もアップ！',
-            price: '初回料金：16,500円',
+            price_1: '16,500円', price_2: '19,800円',
             img: 'https://images.unsplash.com/photo-1609188076864-c35269136b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment5': {
-            title: 'プレミアムリフトアップコース',
+        'kogao_premium': {
+            title: 'プレミアムリフトアップ',
             desc: '小顔矯正＋脂肪分解ラジオ波＋高周波ECSリフトアップで医療レベルの最高小顔に！',
-            price: '初回料金：25,000円',
+            price_1: '25,000円', price_2: '35,000円',
             img: 'https://images.unsplash.com/photo-1596178060671-7a80dc8059ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment6': {
+        'kogao_ecs': {
             title: '瞬間小顔ECSコース',
             desc: '和歌山初導入の高周波で表情筋を引き締め、むくみ・たるみを即効改善。',
-            price: '初回料金：14,300円',
+            price_1: '14,300円', price_2: '22,000円',
             img: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment7': {
-            title: 'ラジオ波リフトアップコース',
+        'kogao_radio': {
+            title: 'ラジオ波リフトアップ',
             desc: '痛みがなく、若々しい肌に！<br>脂肪分解で下がり気味の頬にアプローチ！',
-            price: '初回料金：5,500円',
+            price_1: '5,500円', price_2: '7,700円',
             img: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        // ▼ 2回目以降 (内容はコピーして料金のみ変更)
-        'treatment58': { copyFrom: 'treatment1', price: '2回目以降：8,800円' },
-        'treatment59': { copyFrom: 'treatment2', price: '2回目以降：14,300円' },
-        'treatment60': { copyFrom: 'treatment3', price: '2回目以降：16,500円' },
-        'treatment61': { copyFrom: 'treatment4', price: '2回目以降：19,800円' },
-        'treatment62': { copyFrom: 'treatment5', price: '2回目以降：35,000円' },
-        'treatment63': { copyFrom: 'treatment6', price: '2回目以降：22,000円' },
-        'treatment64': { copyFrom: 'treatment7', price: '2回目以降：7,700円' },
 
-
-        /* =========================================
-           ▼ 美肌脱毛 (Hair Removal)
-           ========================================= */
-        'treatment8': {
+        // --- 脱毛 ---
+        'datsumo_full_vio_face': {
             title: '全身脱毛＋顔＋VIO',
             desc: '顔から足先まで、VIOも含むパーフェクトな全身脱毛コース。',
-            price: '料金：22,000円<br>男性：27,500円',
+            price_1: '22,000円<br>(男性:27,500円)', price_2: '22,000円<br>(男性:27,500円)',
             img: 'https://images.unsplash.com/photo-1560750588-73207b1ef5b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment9': {
+        'datsumo_full_face': {
             title: '全身脱毛＋顔ありVIOなし',
             desc: 'VIOを除く、顔を含む全身脱毛コース。',
-            price: '料金：19,800円',
+            price_1: '19,800円', price_2: '19,800円',
             img: 'https://images.unsplash.com/photo-1552693673-1bf958298935?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment10': {
+        'datsumo_full_vio': {
             title: '全身脱毛＋顔なしVIOあり',
             desc: '顔を除く、VIOを含む全身脱毛コース。',
-            price: '料金：20,900円',
+            price_1: '20,900円', price_2: '20,900円',
             img: 'https://images.unsplash.com/photo-1589710551652-8638b67d25e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment11': {
+        'datsumo_full': {
             title: '全身脱毛のみ',
             desc: '顔とVIOを除く全身脱毛コース。',
-            price: '料金：17,600円<br>男性：19,800円',
+            price_1: '17,600円<br>(男性:19,800円)', price_2: '17,600円<br>(男性:19,800円)',
             img: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment12': {
+        'datsumo_s': {
             title: 'Sパーツ',
             desc: '両脇・両足指甲・鼻下・両ひざ・両手指甲から1箇所お選び頂けます。',
-            price: '料金：2,640円<br>男性：3,300円<br>キッズ：1,650円',
+            price_1: '2,640円', price_2: '2,640円',
             img: 'https://images.unsplash.com/photo-1584621980894-a74e53e41b2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment13': {
+        'datsumo_m': {
             title: 'Mパーツ',
             desc: 'V・I・O・肩・うなじ・お腹・ヒップから1箇所お選び頂けます。',
-            price: '料金：3,520円<br>男性：4,400円<br>キッズ：2,200円',
+            price_1: '3,520円', price_2: '3,520円',
             img: 'https://images.unsplash.com/photo-1584621980894-a74e53e41b2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment14': {
+        'datsumo_l': {
             title: 'Lパーツ',
-            desc: '両胸乳輪・両ひざ上（ひざ含む）・両ひざ下（ひざ含まない）・両ひじ上（ひじ含む）・両ひじ下（ひじ含まない）・背中上・背中下から1箇所お選び下さい。',
-            price: '料金：4,950円<br>男性：5,500円<br>キッズ：2,750円',
+            desc: '両胸乳輪・両ひざ上・両ひざ下・両ひじ上・両ひじ下・背中上・背中下から1箇所。',
+            price_1: '4,950円', price_2: '4,950円',
             img: 'https://images.unsplash.com/photo-1584621980894-a74e53e41b2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment15': {
+        'datsumo_vio': {
             title: 'VIOセット',
             desc: 'デリケートゾーン（Vライン・Iライン・Oライン）のセット脱毛。',
-            price: '料金：6,600円<br>男性：16,500円',
+            price_1: '6,600円', price_2: '6,600円',
             img: 'https://images.unsplash.com/photo-1552693673-1bf958298935?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment16': {
+        'datsumo_face': {
             title: '顔脱毛',
             desc: '化粧ノリがアップする全顔脱毛コース。',
-            price: '料金：5,500円',
+            price_1: '5,500円', price_2: '5,500円',
             img: 'https://images.unsplash.com/photo-1588510883734-3c99c468e36e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment17': {
+        'datsumo_men': {
             title: '男性ヒゲ脱毛',
             desc: '毎日の髭剃りが楽になる、男性専用ヒゲ脱毛。',
-            price: '料金：6,600円',
+            price_1: '6,600円', price_2: '6,600円',
             img: 'https://images.unsplash.com/photo-1621644827024-e8a6c90a5163?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment18': {
+        'datsumo_kids': {
             title: 'キッズ脱毛',
             desc: 'S.M.Lパーツごとに脱毛可能！肌に優しいモードで照射します。',
-            price: '料金：1,650〜円',
+            price_1: '1,650〜円', price_2: '1,650〜円',
             img: 'https://images.unsplash.com/photo-1596434479367-1524e9636a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        // ▼ 2回目以降 (内容はコピー)
-        'treatment65': { copyFrom: 'treatment8', price: '料金：22,000円<br>男性：27,500円' },
-        'treatment66': { copyFrom: 'treatment9', price: '料金：19,800円' },
-        'treatment67': { copyFrom: 'treatment10', price: '料金：20,900円' },
-        'treatment68': { copyFrom: 'treatment11', price: '料金：17,600円<br>男性：19,800円' },
-        'treatment69': { copyFrom: 'treatment12', price: '料金：2,640円<br>男性：3,300円<br>キッズ：1,650円' },
-        'treatment70': { copyFrom: 'treatment13', price: '料金：3,520円<br>男性：4,400円<br>キッズ：2,200円' },
-        'treatment71': { copyFrom: 'treatment14', price: '料金：4,950円<br>男性：5,500円<br>キッズ：2,750円' },
-        'treatment72': { copyFrom: 'treatment15', price: '料金：6,600円<br>男性：16,500円' },
-        'treatment73': { copyFrom: 'treatment16', price: '料金：5,500円' },
-        'treatment74': { copyFrom: 'treatment17', price: '料金：6,600円' },
-        'treatment75': { copyFrom: 'treatment18', price: '料金：1,650〜円' },
 
-
-        /* =========================================
-           ▼ お悩み別ピーリング (Peeling)
-           ========================================= */
-        'treatment19': {
+        // --- ピーリング ---
+        'peel_haab': {
             title: '肌再生ハーブピーリング(HAAB)',
-            desc: '肌再生！ツヤ肌＆毛穴・ニキビ跡・くすみケア！<br>※ダウンタイム少ない※敏感肌にも対応',
-            price: '初回料金：19,800円',
+            desc: '肌再生！ツヤ肌＆毛穴・ニキビ跡・くすみケア！',
+            price_1: '19,800円', price_2: '33,000円',
             img: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment20': {
+        'peel_haab_hard': {
             title: '肌再生ハーブピーリング(剥離あり)',
-            desc: '剥離で古い角質をオフし、肌再生をサポート。<br>乾燥・小ジワ・ハリ不足を改善し、透明感とふっくら肌へ。<br>施術後は赤みやヒリヒリ感が出ることがありますが、数日で落ち着きます。',
-            price: '初回料金：16,500円',
+            desc: '剥離で古い角質をオフし、肌再生をサポート。透明感とふっくら肌へ。',
+            price_1: '16,500円', price_2: '33,000円',
             img: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment21': {
+        'peel_exo': {
             title: 'エクソソームピーリング',
             desc: 'ダーマペンのエステ版！エクソソームで細胞レベルから肌再生をサポート！',
-            price: '初回料金：22,000円',
+            price_1: '22,000円', price_2: '33,000円',
             img: 'https://images.unsplash.com/photo-1614859324967-bfa8804e3b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment22': {
+        'peel_sens': {
             title: '赤み/敏感肌ピーリング',
-            desc: '乳酸菌で角質ケア＆肌バランス整え、敏感肌でも安心！<br>透明感ふっくら肌に！（アンストレス）',
-            price: '初回料金：13,200円',
+            desc: '乳酸菌で角質ケア＆肌バランス整え、敏感肌でも安心！（アンストレス）',
+            price_1: '13,200円', price_2: '22,000円',
             img: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment23': {
-            title: 'ニキビ/ニキビ跡ハーブピーリング',
+        'peel_acne': {
+            title: 'ニキビ/ニキビ跡ピーリング',
             desc: '炎症も角質も改善！ニキビ知らずの柔らか肌に！（ビオフィート）',
-            price: '初回料金：13,200円',
+            price_1: '13,200円', price_2: '22,000円',
             img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment24': {
+        'peel_white': {
             title: '美白くすみピーリング',
-            desc: '高濃度美白成分でシミ・色ムラをケア。透明感と明るさのある肌へ導きます！（イラストリアス）',
-            price: '初回料金：16,500円',
+            desc: '高濃度美白成分でシミ・色ムラをケア。（イラストリアス）',
+            price_1: '16,500円', price_2: '22,000円',
             img: 'https://images.unsplash.com/photo-1560750588-73207b1ef5b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment25': {
+        'peel_aging': {
             title: 'アンチエイジングピーリング',
             desc: '最高の若返りピーリング！ハリ、弾力が蘇ります！',
-            price: '初回料金：19,800円',
+            price_1: '19,800円', price_2: '33,000円',
             img: 'https://images.unsplash.com/photo-1596178060671-7a80dc8059ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment26': {
+        'peel_touki': {
             title: '陶肌トリートメント',
             desc: '300種類の酵素と３種の植物幹細胞で無理なく自然に美しい肌へ！',
-            price: '料金：13,200円',
+            price_1: '13,200円', price_2: '13,200円',
             img: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment27': {
+        'peel_galileo': {
             title: 'ガリレオピーリング',
-            desc: 'あらゆるピーリングのいいとこどり！強炭酸×多成分で肌活性！<br>エクソソームやCICAなどを入れ込み短時間で透明感・弾力・ツヤのある肌へ。',
-            price: '初回料金：13,200円',
+            desc: '強炭酸×多成分で肌活性！短時間で透明感・弾力・ツヤのある肌へ。',
+            price_1: '13,200円', price_2: '16,500円',
             img: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        // ▼ 2回目以降
-        'treatment76': { copyFrom: 'treatment19', price: '2回目以降：33,000円' },
-        'treatment77': { copyFrom: 'treatment20', price: '2回目以降：33,000円' },
-        'treatment78': { copyFrom: 'treatment21', price: '2回目以降：33,000円' },
-        'treatment79': { copyFrom: 'treatment22', price: '2回目以降：22,000円' },
-        'treatment80': { copyFrom: 'treatment23', price: '2回目以降：22,000円' },
-        'treatment81': { copyFrom: 'treatment24', price: '2回目以降：22,000円' },
-        'treatment82': { copyFrom: 'treatment25', price: '2回目以降：33,000円' },
-        'treatment83': { copyFrom: 'treatment26', price: '料金：13,200円' }, // 同額
-        'treatment84': { copyFrom: 'treatment27', price: '2回目以降：16,500円' },
-
-
-        /* =========================================
-           ▼ 毛穴・肌質改善 (Pores / Texture)
-           ========================================= */
-        'treatment28': {
+        // --- 毛穴 ---
+        'pore_wash': {
             title: '毛穴洗浄コース',
             desc: '毛穴な汚れが気になる方へ。',
-            price: '初回料金：6,600円',
+            price_1: '6,600円', price_2: '13,200円',
             img: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment29': {
+        'pore_wash_peel': {
             title: '毛穴洗浄ピーリングコース',
             desc: '頑固な黒ずみ、毛穴詰まりをリセット。',
-            price: '初回料金：8,250円',
+            price_1: '8,250円', price_2: '16,500円',
             img: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment30': {
-            title: '光フォト美肌コース(ベーシック)',
-            desc: '特殊な光で肌のハリ・ツヤアップ！<br>シミ・ニキビ・赤ら顔・若返りの4つからお選びいただけます。（気になる部分のみ）',
-            price: '初回料金：3,300円',
+        'pore_photo_b': {
+            title: '光フォト美肌(ベーシック)',
+            desc: '特殊な光で肌のハリ・ツヤアップ！（気になる部分のみ）',
+            price_1: '3,300円', price_2: '5,500円',
             img: 'https://images.unsplash.com/photo-1614859324967-bfa8804e3b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment31': {
-            title: '光フォト美肌コース(スタンダード)',
-            desc: '特殊な光で肌のハリ・ツヤアップ！<br>シミ・ニキビ・赤ら顔・若返りの4つからお選びいただけます。（顔全体）',
-            price: '初回料金：8,250円',
+        'pore_photo_s': {
+            title: '光フォト美肌(スタンダード)',
+            desc: '特殊な光で肌のハリ・ツヤアップ！（顔全体）',
+            price_1: '8,250円', price_2: '16,500円',
             img: 'https://images.unsplash.com/photo-1614859324967-bfa8804e3b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment32': {
-            title: '光フォト美肌コース(プレミアム)',
-            desc: '特殊な光で肌のハリ・ツヤアップ！シミ・ニキビ・赤ら顔・若返りの4つからお選びいただけます。（顔全体・W打ち）',
-            price: '初回料金：11,000円',
+        'pore_photo_p': {
+            title: '光フォト美肌(プレミアム)',
+            desc: '特殊な光で肌のハリ・ツヤアップ！（顔全体・W打ち）',
+            price_1: '11,000円', price_2: '22,000円',
             img: 'https://images.unsplash.com/photo-1614859324967-bfa8804e3b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        // ▼ 2回目以降
-        'treatment85': { copyFrom: 'treatment28', price: '2回目以降：13,200円' },
-        'treatment86': { copyFrom: 'treatment29', price: '2回目以降：16,500円' },
-        'treatment87': { copyFrom: 'treatment30', price: '2回目以降：5,500円' },
-        'treatment88': { copyFrom: 'treatment31', price: '2回目以降：16,500円' },
-        'treatment89': { copyFrom: 'treatment32', price: '2回目以降：22,000円' },
 
-
-        /* =========================================
-           ▼ ボディーエステ (Body)
-           ========================================= */
-        'treatment33': {
+        // --- ボディ ---
+        'body_full': {
             title: '全身痩せコース',
-            desc: '最新痩身機で脂肪細胞にアプローチし全身のサイズダウンしたい方におすすめ',
-            price: '初回料金：16,500円',
+            desc: '最新痩身機で脂肪細胞にアプローチし全身のサイズダウン。',
+            price_1: '16,500円', price_2: '33,000円',
             img: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment34': {
+        'body_stomach': {
             title: 'お腹痩せコース',
             desc: '最新痩身機でお腹の筋肉を引き締め、たるみ、くびれにアプローチ',
-            price: '初回料金：8,800円',
+            price_1: '8,800円', price_2: '16,500円',
             img: 'https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment35': {
+        'body_upper': {
             title: '上半身痩せコース',
             desc: '最新痩身機で背中・二の腕の脂肪細胞にアプローチ',
-            price: '初回料金：8,800円',
+            price_1: '8,800円', price_2: '16,500円',
             img: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment36': {
+        'body_lower': {
             title: '下半身痩せコース',
             desc: '最新痩身機でもも・ふくらはぎの脂肪細胞にアプローチ',
-            price: '初回料金：8,800円',
+            price_1: '8,800円', price_2: '16,500円',
             img: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment37': {
+        'body_pokkori': {
             title: 'お腹ぽっこりメソット',
-            desc: '和歌山初導入。インナーマッスル・アウターマッスルどちらにも強力アプローチ',
-            price: '初回料金：14,300円',
+            desc: 'インナーマッスル・アウターマッスルどちらにも強力アプローチ',
+            price_1: '14,300円', price_2: '22,000円',
             img: 'https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment38': {
+        'body_bust': {
             title: 'バストアップコース',
             desc: '理想のバストへ。オーダーメイド施術でキレイにしっかりバストアップ',
-            price: '初回料金：11,000円',
+            price_1: '11,000円', price_2: '14,300円',
             img: 'https://images.unsplash.com/photo-1583445013765-46c20c484729?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment39': {
+        'body_hip': {
             title: 'ヒップアップコース',
-            desc: 'お尻の脂肪細胞に最新痩身機でアプローチ。<br>ヒップアップしたい方はにおすすめ',
-            price: '初回料金：5,500円',
+            desc: 'お尻の脂肪細胞に最新痩身機でアプローチ。',
+            price_1: '5,500円', price_2: '8,250円',
             img: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        // ▼ 2回目以降
-        'treatment90': { copyFrom: 'treatment33', price: '2回目以降：33,000円' },
-        'treatment91': { copyFrom: 'treatment34', price: '2回目以降：16,500円' },
-        'treatment92': { copyFrom: 'treatment35', price: '2回目以降：16,500円' },
-        'treatment93': { copyFrom: 'treatment36', price: '2回目以降：16,500円' },
-        'treatment94': { copyFrom: 'treatment37', price: '2回目以降：22,000円' },
-        'treatment95': { copyFrom: 'treatment38', price: '2回目以降：14,300円' },
-        'treatment96': { copyFrom: 'treatment39', price: '2回目以降：8,250円' },
 
-
-        /* =========================================
-           ▼ リラクゼーション (Relaxation)
-           ========================================= */
-        'treatment40': {
+        // --- リラックス ---
+        'relax_oil60': {
             title: '全身オイルリンパマッサージコース(60分)',
             desc: '上質アロマオイルのリンパリラクゼーション',
-            price: '初回料金：6,600円',
+            price_1: '6,600円', price_2: '7,700円',
             img: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment41': {
+        'relax_oil90': {
             title: '全身オイルリンパマッサージコース(90分)',
             desc: '上質アロマオイルのリンパリラクゼーション',
-            price: '初回料金：9,900円',
+            price_1: '9,900円', price_2: '11,000円',
             img: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment42': {
+        'relax_neck': {
             title: '首・肩マッサージコース',
             desc: 'ストレートネック、肩こり、首こりに悩んでる方におすすめ',
-            price: '初回料金：5,500円',
+            price_1: '5,500円', price_2: '8,250円',
             img: 'https://images.unsplash.com/photo-1519824145371-296894a0daa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment43': {
-            title: 'ふくらはぎスッキリマッサージコース',
-            desc: 'むくみ・冷え症の方におすすめ。<br>足裏からふくらはぎ・膝にかけてゆっくりほぐします。',
-            price: '初回料金：4,950円',
+        'relax_calf': {
+            title: 'ふくらはぎスッキリ',
+            desc: 'むくみ・冷え症の方におすすめ。足裏からふくらはぎ・膝にかけて。',
+            price_1: '4,950円', price_2: '7,700円',
             img: 'https://images.unsplash.com/photo-1519824145371-296894a0daa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment44': {
+        'relax_waist': {
             title: '腰痛マッサージコース',
-            desc: '凝り固まった腰にしっかりアプローチ。<br>深い腰痛でお悩みの方にもおすすめ。',
-            price: '初回料金：5,500円',
+            desc: '凝り固まった腰にしっかりアプローチ。',
+            price_1: '5,500円', price_2: '8,250円',
             img: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment45': {
+        'relax_shoulder': {
             title: '打たない肩ボトックス',
-            desc: '高周波、直電流により筋肉細胞にアプローチ。<br>慢性的な肩こりにお悩みの方におすすめ',
-            price: '初回料金：9,900円',
+            desc: '高周波、直電流により筋肉細胞にアプローチ。',
+            price_1: '9,900円', price_2: '13,200円',
             img: 'https://images.unsplash.com/photo-1519824145371-296894a0daa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment46': {
+        'relax_nerve': {
             title: '自律神経改善コース',
             desc: '回復電流で身体のイオンバランスを整えることができます',
-            price: '料金：5,500円',
+            price_1: '5,500円', price_2: '5,500円',
             img: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        // ▼ 2回目以降
-        'treatment97': { copyFrom: 'treatment40', price: '2回目以降：7,700円' },
-        'treatment98': { copyFrom: 'treatment41', price: '2回目以降：11,000円' },
-        'treatment99': { copyFrom: 'treatment42', price: '2回目以降：8,250円' },
-        'treatment100': { copyFrom: 'treatment43', price: '2回目以降：7,700円' },
-        'treatment101': { copyFrom: 'treatment44', price: '2回目以降：8,250円' },
-        'treatment102': { copyFrom: 'treatment45', price: '2回目以降：13,200円' },
-        'treatment103': { copyFrom: 'treatment46', price: '料金：5,500円' },
 
-
-        /* =========================================
-           ▼ 眉毛スタイリング (Eyebrow)
-           ========================================= */
-        'treatment47': {
+        // --- 眉毛 ---
+        'eye_hbl': {
             title: 'HBL(ハリウッドブロウリフト)',
             desc: '眉の生えぐせを根本から改善。毛穴の流れを整えあらゆる眉のお悩みを解決！',
-            price: '料金：8,400円',
+            price_1: '8,400円', price_2: '8,400円',
             img: 'https://images.unsplash.com/photo-1588510883734-3c99c468e36e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment48': {
+        'eye_style': {
             title: '眉毛スタイリング',
-            desc: '詳細：眉毛デザイン、整えスタイリングしやすくします',
-            price: '料金：2,420円',
+            desc: '眉毛デザイン、整えスタイリングしやすくします',
+            price_1: '2,420円', price_2: '2,420円',
             img: 'https://images.unsplash.com/photo-1588510883734-3c99c468e36e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment49': {
+        'eye_wax': {
             title: '眉毛スタイリング＋WAX脱毛',
             desc: '眉毛のデザイン＋WAX脱毛',
-            price: '料金：6,270円',
+            price_1: '6,270円', price_2: '6,270円',
             img: 'https://images.unsplash.com/photo-1596434479367-1524e9636a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        // ▼ 2回目以降
-        'treatment104': { copyFrom: 'treatment47', price: '料金：8,400円' },
-        'treatment105': { copyFrom: 'treatment48', price: '料金：2,420円' },
-        'treatment106': { copyFrom: 'treatment49', price: '料金：6,270円' },
 
-
-        /* =========================================
-           ▼ ブライダルエステ (Bridal)
-           ========================================= */
-        'treatment50': {
+        // --- ブライダル ---
+        'bridal_consult': {
             title: '無料ブライダルエステ相談',
-            desc: '挙式までのエステプランをご希望に合わせてプランニングさせていただきます。<br>ご予算もご相談下さい',
-            price: '料金：0円',
+            desc: '挙式までのエステプランをご希望に合わせてプランニング。',
+            price_1: '0円', price_2: '0円',
             img: 'https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment51': {
+        'bridal_kogao': {
             title: '小顔フェイシャルコース',
             desc: '小顔になりたい！など悩みに合ったおすすめ体験ができるコース',
-            price: '初回料金：5,500円',
+            price_1: '5,500円', price_2: '5,500円',
             img: 'https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment52': {
+        'bridal_white': {
             title: '美白フェイシャルコース',
             desc: '毛穴の悩みや美白になりたい！など悩みに合ったおすすめ体験ができるコース',
-            price: '初回料金：5,500円',
+            price_1: '5,500円', price_2: '5,500円',
             img: 'https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment53': {
+        'bridal_mix': {
             title: '小顔×美肌フェイシャルコース',
             desc: '小顔も美肌の悩みも両方体験できるコース',
-            price: '初回料金：9,900円',
+            price_1: '9,900円', price_2: '9,900円',
             img: 'https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment54': {
+        'bridal_arm': {
             title: '二の腕スッキリコース',
             desc: 'ドレスから見えるデコルテから二の腕をマシンとハンドでスッキリ！',
-            price: '初回料金：8,800円',
+            price_1: '8,800円', price_2: '8,800円',
             img: 'https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment55': {
+        'bridal_back': {
             title: '背中ニキビ美白コース',
             desc: '背中のニキビや肌荒れ、美白が叶う背中集中ケア',
-            price: '初回料金：8,800円',
+            price_1: '8,800円', price_2: '8,800円',
             img: 'https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment56': {
+        'bridal_total': {
             title: 'フェイシャル×ボディーコース',
             desc: 'ドレス姿を引き立てる背中、デコルテ、二の腕をスッキリ・小顔ケアのブライダルトータルプラン',
-            price: '初回料金：9,900円',
+            price_1: '9,900円', price_2: '9,900円',
             img: 'https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         },
-        'treatment57': {
+        'bridal_teeth': {
             title: '歯のホワイトニング',
             desc: '15min×3回。輝く白い歯で最高の笑顔を。',
-            price: '初回料金：5,500円',
+            price_1: '5,500円', price_2: '5,500円',
             img: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-        },
-        // ▼ 2回目以降
-        'treatment107': { copyFrom: 'treatment50', price: '料金：0円' },
-        'treatment108': { copyFrom: 'treatment51', price: '料金：5,500円' },
-        'treatment109': { copyFrom: 'treatment52', price: '料金：5,500円' },
-        'treatment110': { copyFrom: 'treatment53', price: '料金：9,900円' },
-        'treatment111': { copyFrom: 'treatment54', price: '料金：8,800円' },
-        'treatment112': { copyFrom: 'treatment55', price: '料金：8,800円' },
-        'treatment113': { copyFrom: 'treatment56', price: '料金：9,900円' },
-        'treatment114': { copyFrom: 'treatment57', price: '料金：5,500円' }
+        }
     };
 
-    // --- ロジック部分 ---
+    // 現在の選択状態
+    let currentMenuId = null;
+    let currentMode = 'price_1'; // 'price_1' (初回) or 'price_2' (2回目)
 
+    // --- DOM操作 ---
     const tabs = document.querySelectorAll('.category-tab');
     const groups = document.querySelectorAll('.menu-group');
     const menuItems = document.querySelectorAll('.menu-item-btn');
 
+    // タブ切り替え
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
@@ -1070,16 +882,14 @@
         const targetId = tab.dataset.target;
         document.getElementById(targetId).classList.add('active');
         
-        // PCのみ、タブ切り替え時に詳細をリセット（スマホは閉じる）
-        if(window.innerWidth > 960) {
-            // PCならリセットしたい場合はここに書く（今回は維持）
-        } else {
-            closeDetail(); // スマホなら閉じる
+        // スマホは閉じる
+        if(window.innerWidth <= 960) {
+            closeDetail(); 
         }
       });
     });
     
-    // メニュークリック時のアクティブ表示
+    // メニュー項目アクティブ化
     menuItems.forEach(item => {
         item.addEventListener('click', () => {
             menuItems.forEach(i => i.classList.remove('is-active'));
@@ -1087,26 +897,63 @@
         });
     });
 
-    // 詳細を開く
+    /**
+     * 詳細パネルを開く
+     * @param {string} id メニューID
+     */
     function openDetail(id) {
-        let data = MENU_DATA[id];
+        currentMenuId = id;
+        currentMode = 'price_1'; // デフォルトは初回
+        renderDetail();
+
+        // PC用パネルへ描画
+        const pcContent = document.getElementById('pc-detail-content');
+        if(pcContent) pcContent.innerHTML = renderHtml();
+
+        // スマホ用パネルへ描画
+        const mobileContent = document.getElementById('mobile-detail-content');
+        if(mobileContent) mobileContent.innerHTML = renderHtml();
+
+        // スマホの場合は表示アニメーション
+        if (window.innerWidth <= 960) {
+            document.getElementById('mobile-bottom-sheet').classList.add('show');
+            document.getElementById('overlay-bg').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    /**
+     * プラン切り替え (初回 <-> 2回目)
+     * @param {string} mode 'price_1' or 'price_2'
+     */
+    function switchPlan(mode) {
+        currentMode = mode;
         
-        // データがない場合のフォールバック
-        if (!data) {
-            data = {
-                title: "Coming Soon",
-                desc: "詳細情報は準備中です。",
-                price: "",
-                img: "https://images.unsplash.com/photo-1596178060671-7a80dc8059ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-            };
-        }
+        // 再描画（コンテンツ全体を書き換えるとチラつくため、価格とクラスだけ更新しても良いが、
+        // 構成がシンプルなので全体書き換えで実装）
+        const pcContent = document.getElementById('pc-detail-content');
+        if(pcContent) pcContent.innerHTML = renderHtml();
+        
+        const mobileContent = document.getElementById('mobile-detail-content');
+        if(mobileContent) mobileContent.innerHTML = renderHtml();
+    }
+    
+    // グローバルスコープに公開（HTMLのonclickから呼ぶため）
+    window.switchPlan = switchPlan;
 
-        if (data.copyFrom && MENU_DATA[data.copyFrom]) {
-            const base = MENU_DATA[data.copyFrom];
-            data = { ...base, ...data }; 
-        }
+    /**
+     * HTML生成
+     */
+    function renderHtml() {
+        const data = MENU_DATA[currentMenuId];
+        if (!data) return '';
 
-        const html = `
+        const isFirst = (currentMode === 'price_1');
+        const price = isFirst ? data.price_1 : data.price_2;
+        const btn1Class = isFirst ? 'price-toggle-btn active' : 'price-toggle-btn';
+        const btn2Class = !isFirst ? 'price-toggle-btn active' : 'price-toggle-btn';
+
+        return `
             <div class="treatment-container">
                 <div class="treatment-image-wrapper">
                     <img src="${data.img}" class="treatment-image" alt="${data.title}">
@@ -1117,6 +964,11 @@
                         <div class="treatment-divider"></div>
                     </div>
                     
+                    <div class="price-toggle-container">
+                        <button class="${btn1Class}" onclick="switchPlan('price_1')">初回</button>
+                        <button class="${btn2Class}" onclick="switchPlan('price_2')">2回目以降</button>
+                    </div>
+                    
                     <div class="treatment-info-box">
                         <p class="treatment-description">
                             ${data.desc}
@@ -1125,40 +977,29 @@
 
                     <div class="price-tag">
                         <span class="price-label">PRICE</span>
-                        <span class="price-value">${data.price}</span>
+                        <span class="price-value">${price}</span>
                     </div>
+
+                    <a href="https://liff.line.me/2006377601-BWadbvyJ" target="_blank" class="line-reserve-btn">
+                        LINEで予約する
+                    </a>
                 </div>
             </div>
         `;
-
-        // PC用パネルへ描画
-        const pcContent = document.getElementById('pc-detail-content');
-        if(pcContent) pcContent.innerHTML = html;
-
-        // スマホ用パネルへ描画
-        const mobileContent = document.getElementById('mobile-detail-content');
-        if(mobileContent) mobileContent.innerHTML = html;
-
-        // スマホの場合はオーバーレイを表示
-        if (window.innerWidth <= 960) {
-            document.getElementById('mobile-bottom-sheet').classList.add('show');
-            document.getElementById('overlay-bg').classList.add('show');
-            // 背景スクロールロック
-            document.body.style.overflow = 'hidden';
-        }
     }
 
-    // 詳細を閉じる
+    // ダミー関数（openDetail内で呼び出し済みだが構造上必要なら）
+    function renderDetail() {
+        // 処理はrenderHtmlに集約
+    }
+
     function closeDetail() {
         document.getElementById('mobile-bottom-sheet').classList.remove('show');
         document.getElementById('overlay-bg').classList.remove('show');
         menuItems.forEach(i => i.classList.remove('is-active'));
-        
-        // 背景スクロール解除
         document.body.style.overflow = '';
     }
 
-    // 背景クリックでも閉じる
     document.getElementById('overlay-bg').addEventListener('click', closeDetail);
 
   </script>
