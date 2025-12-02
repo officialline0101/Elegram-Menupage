@@ -201,11 +201,7 @@
         background: #fff; border-radius: 24px 24px 0 0;
         transform: translateY(110%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
-        
-        /* ★重要: ここでスクロールさせない。レイアウトコンテナにする */
-        display: flex; 
-        flex-direction: column;
-        overflow: hidden;
+        display: flex; flex-direction: column; overflow: hidden;
     }
     .mobile-bottom-sheet.show { transform: translateY(0); }
     @media (min-width: 961px) { .mobile-bottom-sheet { display: none; } }
@@ -243,10 +239,10 @@
     }
     @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    .treatment-image-wrapper { position: relative; width: 100%; height: 250px; overflow: hidden; flex-shrink: 0; }
+    .treatment-image-wrapper { position: relative; width: 100%; height: 280px; overflow: hidden; flex-shrink: 0; }
     .treatment-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
     @media (min-width: 961px) { .pc-detail-panel:hover .treatment-image { transform: scale(1.05); } }
-    @media (max-width: 960px) { .treatment-image-wrapper { height: 220px; } }
+    @media (max-width: 960px) { .treatment-image-wrapper { height: 240px; } }
 
     .treatment-content {
       padding: 30px; background: #fff; flex: 1; display: flex; flex-direction: column; position: relative;
@@ -351,13 +347,13 @@
     }
     .overlay-bg.show { opacity: 1; pointer-events: auto; }
     
-    /* 閉じるボタン (スマホ用：パネルの枠組みに絶対配置) */
+    /* 閉じるボタン */
     .close-detail-btn {
       position: absolute; top: 16px; right: 16px; 
       background: rgba(255,255,255,0.9);
       border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 24px;
       display: flex; align-items: center; justify-content: center; color: #555;
-      cursor: pointer; z-index: 2001; /* コンテンツより前面に */
+      cursor: pointer; z-index: 2001;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     @media (min-width: 961px) { .close-detail-btn, .overlay-bg { display: none; } }
@@ -518,51 +514,54 @@
   <script>
     /**
      * ▼ メニューデータ管理 ▼
-     * price_1: 初回料金, price_2: 2回目以降
+     * 画像はUnsplashの高品質なフリー画像を使用しています。
+     * 変更したい場合は 'img' のURLを書き換えてください。
+     * w=1080&h=1080&fit=crop のパラメータで正方形に整形しています。
      */
     const MENU_DATA = {
         // --- 小顔 ---
-        'kogao_lift': {
+'kogao_lift': {
             title: 'リフトアップコース',
             desc: '当店人気No.1。小顔矯正で輪郭矯正し、即効性のある小顔に！',
             price_1: '4,400円', price_2: '8,800円',
-            img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            // ▼ ここをDropboxのURL（raw=1付き）に変更
+            img: 'https://www.dropbox.com/scl/fi/g16gg7xrzqd47wf809qhw/.png?rlkey=hfraxvrg9t93njx89l1yje02y&st=5nnn2v0r&raw=1'
         },
         'kogao_detox': {
             title: 'むくみデトックスコース',
             desc: '小顔矯正＋顔、首、肩、デコルテのオイルトリートメント！',
             price_1: '11,000円', price_2: '14,300円',
-            img: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://www.dropbox.com/scl/fi/20b98u8kwfejprk1d9nzz/.png?rlkey=5m7t1orogna0eq473nuxykcye&st=y4um3zfs&raw=1'
         },
         'kogao_fat': {
             title: '脂肪分解コース',
             desc: '小顔矯正＋脂肪分解ラジオ波でV字輪郭！',
             price_1: '13,200円', price_2: '16,500円',
-            img: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://www.dropbox.com/scl/fi/nzlyvfyme7nevyatx0s6d/.png?rlkey=y2lkkiciji8xt0fmjge3lnw6u&st=nc6ath6d&raw=1'
         },
         'kogao_nonsurg': {
             title: '切らない系リフトコース',
             desc: '小顔矯正＋高周波ECSリフトアップで瞬間小顔！肌のハリ艶もアップ！',
             price_1: '16,500円', price_2: '19,800円',
-            img: 'https://images.unsplash.com/photo-1609188076864-c35269136b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://www.dropbox.com/scl/fi/i2vr2ycm2iwek0s6owea7/.png?rlkey=m1dz4lhl5k19m34bkkp62865r&st=2xymncg8&raw=1'
         },
         'kogao_premium': {
             title: 'プレミアムリフトアップ',
             desc: '小顔矯正＋脂肪分解ラジオ波＋高周波ECSリフトアップで医療レベルの最高小顔に！',
             price_1: '25,000円', price_2: '35,000円',
-            img: 'https://images.unsplash.com/photo-1596178060671-7a80dc8059ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://www.dropbox.com/scl/fi/q3w54je8c5lb4qh9zcns2/.png?rlkey=pexpc2u6a56o0j76hdfj7z40m&st=ggczwq86&raw=1'
         },
         'kogao_ecs': {
             title: '瞬間小顔ECSコース',
             desc: '和歌山初導入の高周波で表情筋を引き締め、むくみ・たるみを即効改善。',
             price_1: '14,300円', price_2: '22,000円',
-            img: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1588510883734-3c99c468e36e?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'kogao_radio': {
             title: 'ラジオ波リフトアップ',
             desc: '痛みがなく、若々しい肌に！<br>脂肪分解で下がり気味の頬にアプローチ！',
             price_1: '5,500円', price_2: '7,700円',
-            img: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
 
         // --- 脱毛 ---
@@ -570,67 +569,67 @@
             title: '全身脱毛＋顔＋VIO',
             desc: '顔から足先まで、VIOも含むパーフェクトな全身脱毛コース。',
             price_1: '22,000円<br>(男性:27,500円)', price_2: '22,000円<br>(男性:27,500円)',
-            img: 'https://images.unsplash.com/photo-1560750588-73207b1ef5b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1560750588-73207b1ef5b8?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'datsumo_full_face': {
             title: '全身脱毛＋顔ありVIOなし',
             desc: 'VIOを除く、顔を含む全身脱毛コース。',
             price_1: '19,800円', price_2: '19,800円',
-            img: 'https://images.unsplash.com/photo-1552693673-1bf958298935?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1552693673-1bf958298935?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'datsumo_full_vio': {
             title: '全身脱毛＋顔なしVIOあり',
             desc: '顔を除く、VIOを含む全身脱毛コース。',
             price_1: '20,900円', price_2: '20,900円',
-            img: 'https://images.unsplash.com/photo-1589710551652-8638b67d25e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1589710551652-8638b67d25e3?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'datsumo_full': {
             title: '全身脱毛のみ',
             desc: '顔とVIOを除く全身脱毛コース。',
             price_1: '17,600円<br>(男性:19,800円)', price_2: '17,600円<br>(男性:19,800円)',
-            img: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'datsumo_s': {
             title: 'Sパーツ',
             desc: '両脇・両足指甲・鼻下・両ひざ・両手指甲から1箇所お選び頂けます。',
             price_1: '2,640円', price_2: '2,640円',
-            img: 'https://images.unsplash.com/photo-1584621980894-a74e53e41b2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1629212005697-3f32066fb652?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'datsumo_m': {
             title: 'Mパーツ',
             desc: 'V・I・O・肩・うなじ・お腹・ヒップから1箇所お選び頂けます。',
             price_1: '3,520円', price_2: '3,520円',
-            img: 'https://images.unsplash.com/photo-1584621980894-a74e53e41b2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'datsumo_l': {
             title: 'Lパーツ',
             desc: '両胸乳輪・両ひざ上・両ひざ下・両ひじ上・両ひじ下・背中上・背中下から1箇所。',
             price_1: '4,950円', price_2: '4,950円',
-            img: 'https://images.unsplash.com/photo-1584621980894-a74e53e41b2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'datsumo_vio': {
             title: 'VIOセット',
             desc: 'デリケートゾーン（Vライン・Iライン・Oライン）のセット脱毛。',
             price_1: '6,600円', price_2: '6,600円',
-            img: 'https://images.unsplash.com/photo-1552693673-1bf958298935?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1555820585-c5ae44394b79?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'datsumo_face': {
             title: '顔脱毛',
             desc: '化粧ノリがアップする全顔脱毛コース。',
             price_1: '5,500円', price_2: '5,500円',
-            img: 'https://images.unsplash.com/photo-1588510883734-3c99c468e36e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1596434479367-1524e9636a0f?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'datsumo_men': {
             title: '男性ヒゲ脱毛',
             desc: '毎日の髭剃りが楽になる、男性専用ヒゲ脱毛。',
             price_1: '6,600円', price_2: '6,600円',
-            img: 'https://images.unsplash.com/photo-1621644827024-e8a6c90a5163?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1621644827024-e8a6c90a5163?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'datsumo_kids': {
             title: 'キッズ脱毛',
             desc: 'S.M.Lパーツごとに脱毛可能！肌に優しいモードで照射します。',
             price_1: '1,650〜円', price_2: '1,650〜円',
-            img: 'https://images.unsplash.com/photo-1596434479367-1524e9636a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
 
         // --- ピーリング ---
@@ -638,86 +637,86 @@
             title: '肌再生ハーブピーリング(HAAB)',
             desc: '肌再生！ツヤ肌＆毛穴・ニキビ跡・くすみケア！',
             price_1: '19,800円', price_2: '33,000円',
-            img: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'peel_haab_hard': {
             title: '肌再生ハーブピーリング(剥離あり)',
             desc: '剥離で古い角質をオフし、肌再生をサポート。透明感とふっくら肌へ。',
             price_1: '16,500円', price_2: '33,000円',
-            img: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1608248597279-f99d160bfbc8?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'peel_exo': {
             title: 'エクソソームピーリング',
             desc: 'ダーマペンのエステ版！エクソソームで細胞レベルから肌再生をサポート！',
             price_1: '22,000円', price_2: '33,000円',
-            img: 'https://images.unsplash.com/photo-1614859324967-bfa8804e3b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1612872087720-48ca45e4c690?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'peel_sens': {
             title: '赤み/敏感肌ピーリング',
             desc: '乳酸菌で角質ケア＆肌バランス整え、敏感肌でも安心！（アンストレス）',
             price_1: '13,200円', price_2: '22,000円',
-            img: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'peel_acne': {
             title: 'ニキビ/ニキビ跡ピーリング',
             desc: '炎症も角質も改善！ニキビ知らずの柔らか肌に！（ビオフィート）',
             price_1: '13,200円', price_2: '22,000円',
-            img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1554196340-1c406d3d69a5?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'peel_white': {
             title: '美白くすみピーリング',
             desc: '高濃度美白成分でシミ・色ムラをケア。（イラストリアス）',
             price_1: '16,500円', price_2: '22,000円',
-            img: 'https://images.unsplash.com/photo-1560750588-73207b1ef5b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1561043433-aaf687c4cf04?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'peel_aging': {
             title: 'アンチエイジングピーリング',
             desc: '最高の若返りピーリング！ハリ、弾力が蘇ります！',
             price_1: '19,800円', price_2: '33,000円',
-            img: 'https://images.unsplash.com/photo-1596178060671-7a80dc8059ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1519699047748-68e143070896?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'peel_touki': {
             title: '陶肌トリートメント',
             desc: '300種類の酵素と３種の植物幹細胞で無理なく自然に美しい肌へ！',
             price_1: '13,200円', price_2: '13,200円',
-            img: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'peel_galileo': {
             title: 'ガリレオピーリング',
             desc: '強炭酸×多成分で肌活性！短時間で透明感・弾力・ツヤのある肌へ。',
             price_1: '13,200円', price_2: '16,500円',
-            img: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         // --- 毛穴 ---
         'pore_wash': {
             title: '毛穴洗浄コース',
             desc: '毛穴な汚れが気になる方へ。',
             price_1: '6,600円', price_2: '13,200円',
-            img: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1556228552-523c03522ba1?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'pore_wash_peel': {
             title: '毛穴洗浄ピーリングコース',
             desc: '頑固な黒ずみ、毛穴詰まりをリセット。',
             price_1: '8,250円', price_2: '16,500円',
-            img: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'pore_photo_b': {
             title: '光フォト美肌(ベーシック)',
             desc: '特殊な光で肌のハリ・ツヤアップ！（気になる部分のみ）',
             price_1: '3,300円', price_2: '5,500円',
-            img: 'https://images.unsplash.com/photo-1614859324967-bfa8804e3b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1596434479367-1524e9636a0f?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'pore_photo_s': {
             title: '光フォト美肌(スタンダード)',
             desc: '特殊な光で肌のハリ・ツヤアップ！（顔全体）',
             price_1: '8,250円', price_2: '16,500円',
-            img: 'https://images.unsplash.com/photo-1614859324967-bfa8804e3b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1614859324967-bfa8804e3b1f?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'pore_photo_p': {
             title: '光フォト美肌(プレミアム)',
             desc: '特殊な光で肌のハリ・ツヤアップ！（顔全体・W打ち）',
             price_1: '11,000円', price_2: '22,000円',
-            img: 'https://images.unsplash.com/photo-1614859324967-bfa8804e3b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1614859324967-bfa8804e3b1f?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
 
         // --- ボディ ---
@@ -725,43 +724,43 @@
             title: '全身痩せコース',
             desc: '最新痩身機で脂肪細胞にアプローチし全身のサイズダウン。',
             price_1: '16,500円', price_2: '33,000円',
-            img: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'body_stomach': {
             title: 'お腹痩せコース',
             desc: '最新痩身機でお腹の筋肉を引き締め、たるみ、くびれにアプローチ',
             price_1: '8,800円', price_2: '16,500円',
-            img: 'https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'body_upper': {
             title: '上半身痩せコース',
             desc: '最新痩身機で背中・二の腕の脂肪細胞にアプローチ',
             price_1: '8,800円', price_2: '16,500円',
-            img: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'body_lower': {
             title: '下半身痩せコース',
             desc: '最新痩身機でもも・ふくらはぎの脂肪細胞にアプローチ',
             price_1: '8,800円', price_2: '16,500円',
-            img: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1519824145371-296894a0daa9?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'body_pokkori': {
             title: 'お腹ぽっこりメソット',
             desc: 'インナーマッスル・アウターマッスルどちらにも強力アプローチ',
             price_1: '14,300円', price_2: '22,000円',
-            img: 'https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'body_bust': {
             title: 'バストアップコース',
             desc: '理想のバストへ。オーダーメイド施術でキレイにしっかりバストアップ',
             price_1: '11,000円', price_2: '14,300円',
-            img: 'https://images.unsplash.com/photo-1583445013765-46c20c484729?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1583445013765-46c20c484729?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'body_hip': {
             title: 'ヒップアップコース',
             desc: 'お尻の脂肪細胞に最新痩身機でアプローチ。',
             price_1: '5,500円', price_2: '8,250円',
-            img: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
 
         // --- リラックス ---
@@ -769,43 +768,43 @@
             title: '全身オイルリンパマッサージコース(60分)',
             desc: '上質アロマオイルのリンパリラクゼーション',
             price_1: '6,600円', price_2: '7,700円',
-            img: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://www.dropbox.com/scl/fi/1dqlux0kej4wu73s5eipl/60.png?rlkey=n4jofpm66yua528k4009vnb80&st=elbwxgs7&raw=1'
         },
         'relax_oil90': {
             title: '全身オイルリンパマッサージコース(90分)',
             desc: '上質アロマオイルのリンパリラクゼーション',
             price_1: '9,900円', price_2: '11,000円',
-            img: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://www.dropbox.com/scl/fi/3bhxbaz0mzbh6c9ovrud5/90.png?rlkey=0tpexa94ybjcx5z8gdtoqp2nr&st=kkyblzda&raw=1'
         },
         'relax_neck': {
             title: '首・肩マッサージコース',
             desc: 'ストレートネック、肩こり、首こりに悩んでる方におすすめ',
             price_1: '5,500円', price_2: '8,250円',
-            img: 'https://images.unsplash.com/photo-1519824145371-296894a0daa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://www.dropbox.com/scl/fi/etdstd54bi3iq0waqb7jf/_.png?rlkey=4gky8hw9i1n3k8rh9qu72mrjq&st=w7abbhib&raw=1'
         },
         'relax_calf': {
             title: 'ふくらはぎスッキリ',
             desc: 'むくみ・冷え症の方におすすめ。足裏からふくらはぎ・膝にかけて。',
             price_1: '4,950円', price_2: '7,700円',
-            img: 'https://images.unsplash.com/photo-1519824145371-296894a0daa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://www.dropbox.com/scl/fi/4jkcovxyl2l7p1w29gnt6/.png?rlkey=p727jxfdzaf0mi0w663nii6zt&st=c4c9h5wj&raw=1'
         },
         'relax_waist': {
             title: '腰痛マッサージコース',
             desc: '凝り固まった腰にしっかりアプローチ。',
             price_1: '5,500円', price_2: '8,250円',
-            img: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://www.dropbox.com/scl/fi/77owkfj36948c8mik8ung/.png?rlkey=w5ayuyoif5sfkrxurpxmjvzca&st=12400jib&raw=1'
         },
         'relax_shoulder': {
             title: '打たない肩ボトックス',
             desc: '高周波、直電流により筋肉細胞にアプローチ。',
             price_1: '9,900円', price_2: '13,200円',
-            img: 'https://images.unsplash.com/photo-1519824145371-296894a0daa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://www.dropbox.com/scl/fi/6ddllol1d65ilumy1gbru/.png?rlkey=52qv7l6xhflihhw99d989jnsp&st=y9tcik7i&raw=1'
         },
         'relax_nerve': {
             title: '自律神経改善コース',
             desc: '回復電流で身体のイオンバランスを整えることができます',
             price_1: '5,500円', price_2: '5,500円',
-            img: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://www.dropbox.com/scl/fi/r5deb2jcf87qmoz6ajn7a/.png?rlkey=0m8c9vo890511zln3jw3rr1cq&st=lk2xwq8s&raw=1'
         },
 
         // --- 眉毛 ---
@@ -813,19 +812,19 @@
             title: 'HBL(ハリウッドブロウリフト)',
             desc: '眉の生えぐせを根本から改善。毛穴の流れを整えあらゆる眉のお悩みを解決！',
             price_1: '8,400円', price_2: '8,400円',
-            img: 'https://images.unsplash.com/photo-1588510883734-3c99c468e36e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1596434479367-1524e9636a0f?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'eye_style': {
             title: '眉毛スタイリング',
             desc: '眉毛デザイン、整えスタイリングしやすくします',
             price_1: '2,420円', price_2: '2,420円',
-            img: 'https://images.unsplash.com/photo-1588510883734-3c99c468e36e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'eye_wax': {
             title: '眉毛スタイリング＋WAX脱毛',
             desc: '眉毛のデザイン＋WAX脱毛',
             price_1: '6,270円', price_2: '6,270円',
-            img: 'https://images.unsplash.com/photo-1596434479367-1524e9636a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1588510883734-3c99c468e36e?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
 
         // --- ブライダル ---
@@ -833,49 +832,49 @@
             title: '無料ブライダルエステ相談',
             desc: '挙式までのエステプランをご希望に合わせてプランニング。',
             price_1: '0円', price_2: '0円',
-            img: 'https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1549417229-aa67d3263c09?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'bridal_kogao': {
             title: '小顔フェイシャルコース',
             desc: '小顔になりたい！など悩みに合ったおすすめ体験ができるコース',
             price_1: '5,500円', price_2: '5,500円',
-            img: 'https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1596178060671-7a80dc8059ea?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'bridal_white': {
             title: '美白フェイシャルコース',
             desc: '毛穴の悩みや美白になりたい！など悩みに合ったおすすめ体験ができるコース',
             price_1: '5,500円', price_2: '5,500円',
-            img: 'https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'bridal_mix': {
             title: '小顔×美肌フェイシャルコース',
             desc: '小顔も美肌の悩みも両方体験できるコース',
             price_1: '9,900円', price_2: '9,900円',
-            img: 'https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'bridal_arm': {
             title: '二の腕スッキリコース',
             desc: 'ドレスから見えるデコルテから二の腕をマシンとハンドでスッキリ！',
             price_1: '8,800円', price_2: '8,800円',
-            img: 'https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'bridal_back': {
             title: '背中ニキビ美白コース',
             desc: '背中のニキビや肌荒れ、美白が叶う背中集中ケア',
             price_1: '8,800円', price_2: '8,800円',
-            img: 'https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1544161513-0179fe746fd5?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'bridal_total': {
             title: 'フェイシャル×ボディーコース',
             desc: 'ドレス姿を引き立てる背中、デコルテ、二の腕をスッキリ・小顔ケアのブライダルトータルプラン',
             price_1: '9,900円', price_2: '9,900円',
-            img: 'https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1080&h=1080&q=80'
         },
         'bridal_teeth': {
             title: '歯のホワイトニング',
             desc: '15min×3回。輝く白い歯で最高の笑顔を。',
             price_1: '5,500円', price_2: '5,500円',
-            img: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            img: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=1080&h=1080&q=80'
         }
     };
 
