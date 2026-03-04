@@ -393,6 +393,8 @@
           <button class="category-tab" data-target="cat-relax">リラックス <span>Relax</span></button>
           <button class="category-tab" data-target="cat-eyebrow">眉毛 <span>Eye</span></button>
           <button class="category-tab" data-target="cat-bridal">ブライダル <span>Bridal</span></button>
+          <button class="category-tab" data-target="cat-itlift">イットリフト <span>It Lift</span></button>
+          <button class="category-tab" data-target="cat-plasmania">プラズマニア <span>Plasmania</span></button>
         </div>
 
         <div id="cat-kogao" class="menu-group active">
@@ -496,6 +498,26 @@
                 <button class="menu-item-btn" onclick="openDetail('bridal_back')">背中ニキビ美白コース <span class="chevron">›</span></button>
                 <button class="menu-item-btn" onclick="openDetail('bridal_total')">フェイシャル×ボディー <span class="chevron">›</span></button>
                 <button class="menu-item-btn" onclick="openDetail('bridal_teeth')">歯のホワイトニング <span class="chevron">›</span></button>
+            </div>
+        </div>
+
+        <div id="cat-itlift" class="menu-group">
+            <div class="menu-group-title">イットリフト <span>IT LIFT</span></div>
+            <div class="menu-list">
+                <button class="menu-item-btn" onclick="openDetail('itlift_whole_face')">全顔コース(おでこ.目元~顎下.首まで) <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('itlift_lower_face')">下半顔コース(顎.二重顎.首) <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('itlift_smile_lines')">ほうれい線コース <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('itlift_face_line')">フェイスラインコース <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('itlift_eye_area')">目元周り集中コース <span class="chevron">›</span></button>
+            </div>
+        </div>
+
+        <div id="cat-plasmania" class="menu-group">
+            <div class="menu-group-title">プラズマニア <span>PLASMANIA</span></div>
+            <div class="menu-list">
+                <button class="menu-item-btn" onclick="openDetail('plasmania_whole_face_1')">プラズマニア全顔(60分) 1回 <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('plasmania_partial')">プラズマニア部分ケア(30分) <span class="chevron">›</span></button>
+                <button class="menu-item-btn" onclick="openDetail('plasmania_set')">プラズマニアセット <span class="chevron">›</span></button>
             </div>
         </div>
       </section>
@@ -879,6 +901,58 @@
             desc: '15min×3回。輝く白い歯で最高の笑顔を。',
             price_1: '5,500円', price_2: '5,500円',
             img: 'https://www.dropbox.com/scl/fi/irsniuz6ecj9nsf8vcygf/.png?rlkey=l8mo34g7d83mpfccy7drj1v1j&st=zlnxvua6&raw=1'
+        },
+        
+        // --- イットリフト ---
+        'itlift_whole_face': {
+            title: '全顔コース(おでこ.目元~顎下.首まで)',
+            desc: '※ウルトラエレクトロポレーション付き(高分子美容成分を20倍浸透)',
+            price_1: '33,000円', price_2: '38,500円',
+            img: 'https://www.dropbox.com/scl/fi/ei0lbdvdnvhoj56cs5d56/.png?rlkey=q7561o2wmhgziptsg8ylhc67y&st=ry28yl25&raw=1'
+        },
+        'itlift_lower_face': {
+            title: '下半顔コース(顎.二重顎.首)',
+            desc: '',
+            price_1: '22,000円', price_2: '27,500円',
+            img: 'https://www.dropbox.com/scl/fi/ei0lbdvdnvhoj56cs5d56/.png?rlkey=q7561o2wmhgziptsg8ylhc67y&st=ry28yl25&raw=1'
+        },
+        'itlift_smile_lines': {
+            title: 'ほうれい線コース',
+            desc: '',
+            price_1: '13,500円', price_2: '16,500円',
+            img: 'https://www.dropbox.com/scl/fi/ei0lbdvdnvhoj56cs5d56/.png?rlkey=q7561o2wmhgziptsg8ylhc67y&st=ry28yl25&raw=1'
+        },
+        'itlift_face_line': {
+            title: 'フェイスラインコース',
+            desc: '',
+            price_1: '13,500円', price_2: '16,500円',
+            img: 'https://www.dropbox.com/scl/fi/ei0lbdvdnvhoj56cs5d56/.png?rlkey=q7561o2wmhgziptsg8ylhc67y&st=ry28yl25&raw=1'
+        },
+        'itlift_eye_area': {
+            title: '目元周り集中コース',
+            desc: '',
+            price_1: '8,800円', price_2: '11,000円',
+            img: 'https://www.dropbox.com/scl/fi/ei0lbdvdnvhoj56cs5d56/.png?rlkey=q7561o2wmhgziptsg8ylhc67y&st=ry28yl25&raw=1'
+        },
+
+        // --- プラズマニア ---
+        'plasmania_whole_face_1': {
+            title: 'プラズマニア全顔(60分) 1回',
+            desc: '',
+            price_1: 'お試し 13,200円', price_2: '22,000円',
+            img: 'https://www.dropbox.com/scl/fi/ei0lbdvdnvhoj56cs5d56/.png?rlkey=q7561o2wmhgziptsg8ylhc67y&st=ry28yl25&raw=1'
+        },
+        'plasmania_partial': {
+            title: 'プラズマニア部分ケア(30分)',
+            desc: '',
+            price_1: '8,800円', price_2: '13,200円',
+            img: 'https://www.dropbox.com/scl/fi/ei0lbdvdnvhoj56cs5d56/.png?rlkey=q7561o2wmhgziptsg8ylhc67y&st=ry28yl25&raw=1'
+        },
+        'plasmania_set': {
+            title: 'プラズマニアセット',
+            desc: 'ハーブピーリングや光フォトと一緒にOK',
+            price_1: 'プラズマDDS 11,000円', price_2: 'プラズマDDS 11,000円',
+            img: 'https://www.dropbox.com/scl/fi/ei0lbdvdnvhoj56cs5d56/.png?rlkey=q7561o2wmhgziptsg8ylhc67y&st=ry28yl25&raw=1'
         }
     };
 
