@@ -111,22 +111,105 @@
     @media (max-width: 960px) { .menu-layout { display: block; } }
 
     /* カテゴリタブ */
-    .category-tabs {
-      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;
+    .category-tabs-wrapper {
       position: sticky; top: 10px; z-index: 10;
+      margin-bottom: 24px;
+    }
+    .category-tabs {
+      display: flex; flex-wrap: wrap; gap: 8px;
       background: rgba(255,255,255,0.85); backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       padding: 12px; border-radius: 20px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.03);
     }
     @media (max-width: 768px) {
+        .category-tabs-wrapper {
+            position: sticky; top: 0; z-index: 10;
+            margin: 0 -16px 20px -16px;
+            /* フェードグラデーション用 */
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 3%, black 85%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black 3%, black 85%, transparent 100%);
+            transition: -webkit-mask-image 0.3s, mask-image 0.3s;
+        }
+        /* スクロールが右端に達したらフェードを解除 */
+        .category-tabs-wrapper.scrolled-end {
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 3%, black 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black 3%, black 100%);
+        }
+        /* スクロールが左端にいるとき左フェード不要 */
+        .category-tabs-wrapper.scrolled-start {
+            -webkit-mask-image: linear-gradient(to right, black 0%, black 85%, transparent 100%);
+            mask-image: linear-gradient(to right, black 0%, black 85%, transparent 100%);
+        }
+        .category-tabs-wrapper.scrolled-start.scrolled-end {
+            -webkit-mask-image: none;
+            mask-image: none;
+        }
         .category-tabs {
             flex-wrap: nowrap; overflow-x: auto;
-            padding: 10px 10px 14px 10px; margin: 0 -10px 24px -10px;
-            border-radius: 0; -ms-overflow-style: none; scrollbar-width: none;
+            padding: 12px 20px 12px 20px;
+            border-radius: 0;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            /* カスタム薄型スクロールバー（モバイル用） */
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-light) transparent;
         }
-        .category-tabs::-webkit-scrollbar { display: none; }
-        .category-tabs::before, .category-tabs::after { content: ''; display: block; width: 8px; flex-shrink: 0; }
+        .category-tabs::-webkit-scrollbar { height: 3px; }
+        .category-tabs::-webkit-scrollbar-track { background: transparent; }
+        .category-tabs::-webkit-scrollbar-thumb {
+            background: var(--accent-light); border-radius: 10px;
+        }
+    }
+
+    /* スワイプヒント矢印 */
+    .swipe-hint {
+        display: none;
+    }
+    @media (max-width: 768px) {
+        .swipe-hint {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 4px 0 0;
+            font-size: 11px;
+            color: var(--text-muted);
+            opacity: 1;
+            transition: opacity 0.5s ease;
+            text-align: center;
+        }
+        .swipe-hint.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .swipe-hint-arrow {
+            display: inline-block;
+            animation: swipeArrow 1.5s ease-in-out infinite;
+            font-size: 14px;
+            color: var(--accent);
+        }
+        @keyframes swipeArrow {
+            0%, 100% { transform: translateX(0); opacity: 0.4; }
+            50% { transform: translateX(6px); opacity: 1; }
+        }
+
+        /* スクロールインジケータードット */
+        .scroll-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            padding: 6px 0 0;
+        }
+        .scroll-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--accent-light);
+            transition: all 0.3s ease;
+        }
+        .scroll-dot.active {
+            width: 18px; border-radius: 3px;
+            background: var(--accent);
+        }
     }
     .category-tab {
       border: 1px solid transparent; background: #fcfcfc;
@@ -135,6 +218,7 @@
       transition: all 0.3s; font-family: inherit; flex-shrink: 0;
       display: flex; align-items: center; gap: 6px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      scroll-snap-align: start;
     }
     .category-tab span { font-size: 10px; opacity: 0.5; text-transform: uppercase; font-weight: 700; }
     .category-tab:hover { background: #fff; transform: translateY(-2px); color: var(--accent-dark); }
@@ -253,6 +337,9 @@
       content: ''; position: absolute; top: -20px; left: 0; right: 0; height: 30px;
       background: #fff; border-radius: 30px 30px 0 0; z-index: 1;
     }
+    /* 画像がないメニュー用 */
+    .treatment-content.no-image { padding-top: 40px; }
+    .treatment-content.no-image::before { display: none; }
 
     .treatment-header { position: relative; z-index: 2; margin-bottom: 16px; text-align: center; }
     .treatment-title {
@@ -384,20 +471,37 @@
 
     <main class="menu-layout">
       <section>
-        <div class="category-tabs">
-          <button class="category-tab active" data-target="cat-kogao">小顔矯正 <span>Face</span></button>
-          <button class="category-tab" data-target="cat-datsumo">美肌脱毛 <span>Skin</span></button>
-          <button class="category-tab" data-target="cat-peeling">ピーリング <span>Peel</span></button>
-          <button class="category-tab" data-target="cat-pore">毛穴・肌質 <span>Pore</span></button>
-          <button class="category-tab" data-target="cat-body">ボディ <span>Body</span></button>
-          <button class="category-tab" data-target="cat-relax">リラックス <span>Relax</span></button>
-          <button class="category-tab" data-target="cat-eyebrow">眉毛 <span>Eye</span></button>
-          <button class="category-tab" data-target="cat-bridal">ブライダル <span>Bridal</span></button>
-          <button class="category-tab" data-target="cat-itlift">イットリフト <span>It Lift</span></button>
-          <button class="category-tab" data-target="cat-plasmania">プラズマニア <span>Plasmania</span></button>
+        <div class="category-tabs-wrapper" id="tabs-wrapper">
+          <div class="category-tabs" id="category-tabs">
+            <button class="category-tab active" data-target="cat-ecs">瞬間小顔ECS <span>ECS</span></button>
+            <button class="category-tab" data-target="cat-kogao">小顔矯正 <span>Face</span></button>
+            <button class="category-tab" data-target="cat-datsumo">美肌脱毛 <span>Skin</span></button>
+            <button class="category-tab" data-target="cat-peeling">ピーリング <span>Peel</span></button>
+            <button class="category-tab" data-target="cat-pore">毛穴・肌質 <span>Pore</span></button>
+            <button class="category-tab" data-target="cat-body">ボディ <span>Body</span></button>
+            <button class="category-tab" data-target="cat-relax">リラックス <span>Relax</span></button>
+            <button class="category-tab" data-target="cat-eyebrow">眉毛 <span>Eye</span></button>
+            <button class="category-tab" data-target="cat-bridal">ブライダル <span>Bridal</span></button>
+            <button class="category-tab" data-target="cat-itlift">イットリフト <span>It Lift</span></button>
+            <button class="category-tab" data-target="cat-plasmania">プラズマニア <span>Plasmania</span></button>
+          </div>
+          <div class="swipe-hint" id="swipe-hint">
+            <span>スワイプでカテゴリ切替</span>
+            <span class="swipe-hint-arrow">→</span>
+          </div>
+          <div class="scroll-indicator" id="scroll-indicator"></div>
         </div>
 
-        <div id="cat-kogao" class="menu-group active">
+        <div id="cat-ecs" class="menu-group active">
+          <div class="menu-group-title">瞬間小顔ECS <span>ECS COURSE</span></div>
+          <div class="menu-list">
+              <button class="menu-item-btn" onclick="openDetail('ecs_30')">瞬間小顔ECSコース(30分) <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('ecs_40')">瞬間小顔ECSコース(40分) <span class="chevron">›</span></button>
+              <button class="menu-item-btn" onclick="openDetail('ecs_60')">瞬間小顔ECSコース(60分) <span class="chevron">›</span></button>
+          </div>
+        </div>
+
+        <div id="cat-kogao" class="menu-group">
           <div class="menu-group-title">小顔矯正リフトアップ <span>FACE LIFT</span></div>
           <div class="menu-list">
               <button class="menu-item-btn" onclick="openDetail('kogao_lift')">リフトアップコース <span class="chevron">›</span></button>
@@ -545,6 +649,26 @@
      * w=1080&h=1080&fit=crop のパラメータで正方形に整形しています。
      */
     const MENU_DATA = {
+        // --- 瞬間小顔ECS ---
+        'ecs_30': {
+            title: '瞬間小顔ECSコース(30分)',
+            desc: 'Y字・円盤の2つの電流アプローチからお好きなものを1つお選びいただけます。',
+            price_1: '8,800円', price_2: '11,000円',
+            img: ''
+        },
+        'ecs_40': {
+            title: '瞬間小顔ECSコース(40分)',
+            desc: 'Y字・円盤・ハンドの3つの電流アプローチからお好きなものを2つお選びいただけます。',
+            price_1: '14,300円', price_2: '22,000円',
+            img: ''
+        },
+        'ecs_60': {
+            title: '瞬間小顔ECSコース(60分)',
+            desc: 'Y字・円盤・ハンドの3つの電流アプローチを受けられるスペシャルコースです。',
+            price_1: '19,800円', price_2: '33,000円',
+            img: ''
+        },
+
         // --- 小顔 ---
         'kogao_lift': {
             title: 'リフトアップコース',
@@ -1046,12 +1170,16 @@
         const btn1Class = isFirst ? 'price-toggle-btn active' : 'price-toggle-btn';
         const btn2Class = !isFirst ? 'price-toggle-btn active' : 'price-toggle-btn';
 
-        return `
-            <div class="treatment-container">
+        // 画像がない場合は画像エリアを非表示
+        const imageHtml = data.img ? `
                 <div class="treatment-image-wrapper">
                     <img src="${data.img}" class="treatment-image" alt="${data.title}">
-                </div>
-                <div class="treatment-content">
+                </div>` : '';
+
+        return `
+            <div class="treatment-container">
+                ${imageHtml}
+                <div class="treatment-content${data.img ? '' : ' no-image'}">
                     <div class="treatment-header">
                         <div class="treatment-title">${data.title}</div>
                         <div class="treatment-divider"></div>
@@ -1094,6 +1222,83 @@
     }
 
     document.getElementById('overlay-bg').addEventListener('click', closeDetail);
+
+    // ▼ スクロールヒント & インジケーター制御 ▼
+    (function() {
+      const tabsEl = document.getElementById('category-tabs');
+      const wrapper = document.getElementById('tabs-wrapper');
+      const hint = document.getElementById('swipe-hint');
+      const indicator = document.getElementById('scroll-indicator');
+      if (!tabsEl || !wrapper) return;
+
+      const tabButtons = tabsEl.querySelectorAll('.category-tab');
+      const totalTabs = tabButtons.length;
+
+      // スクロールインジケータードットを生成
+      function buildDots() {
+        if (window.innerWidth > 768) { indicator.innerHTML = ''; return; }
+        // 3つのドットで全体の位置を表現
+        const dotCount = 3;
+        indicator.innerHTML = '';
+        for (let i = 0; i < dotCount; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'scroll-dot' + (i === 0 ? ' active' : '');
+          indicator.appendChild(dot);
+        }
+      }
+      buildDots();
+      window.addEventListener('resize', buildDots);
+
+      // スクロール位置に応じてフェード & ドットを更新
+      function updateScrollState() {
+        if (window.innerWidth > 768) return;
+        const scrollLeft = tabsEl.scrollLeft;
+        const maxScroll = tabsEl.scrollWidth - tabsEl.clientWidth;
+        const ratio = maxScroll > 0 ? scrollLeft / maxScroll : 0;
+
+        // 左端・右端の判定
+        if (scrollLeft <= 5) {
+          wrapper.classList.add('scrolled-start');
+        } else {
+          wrapper.classList.remove('scrolled-start');
+        }
+        if (scrollLeft >= maxScroll - 5) {
+          wrapper.classList.add('scrolled-end');
+        } else {
+          wrapper.classList.remove('scrolled-end');
+        }
+
+        // ドットのアクティブ状態
+        const dots = indicator.querySelectorAll('.scroll-dot');
+        const dotCount = dots.length;
+        if (dotCount === 0) return;
+        const activeIdx = Math.min(Math.floor(ratio * dotCount), dotCount - 1);
+        dots.forEach((d, i) => {
+          d.classList.toggle('active', i === activeIdx);
+        });
+      }
+
+      tabsEl.addEventListener('scroll', updateScrollState, { passive: true });
+      // 初期状態を設定
+      updateScrollState();
+
+      // 初回スワイプでヒントを非表示
+      let hintHidden = false;
+      tabsEl.addEventListener('scroll', function() {
+        if (!hintHidden && tabsEl.scrollLeft > 20) {
+          hintHidden = true;
+          hint.classList.add('hidden');
+        }
+      }, { passive: true });
+
+      // タブクリック時にスムーズスクロールでタブを表示
+      tabButtons.forEach(tab => {
+        tab.addEventListener('click', function() {
+          if (window.innerWidth > 768) return;
+          tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        });
+      });
+    })();
 
   </script>
 </body>
