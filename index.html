@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elegram｜施術メニュー一覧</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;600;700&family=Noto+Serif+JP:wght@500;600&family=Noto+Sans+JP:wght@300;400;500&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ivory:#faf8f4; --lav-bg:#efe9f5; --lav-mist:#d9cbe8; --lav:#613d85; --lav-deep:#4a2d68;
+  --lavender:#b7a4c8; --lavender-deep:#9d88b2; --lavender-mist:#e3d8ef;
+  --gold:#c9a86a; --gold-deep:#b8965a; --ink:#2b2b2b; --grey:#8a8275; --rule:#e3d8c2; --rule-lav:#d9cbe8;
+  --serif:"Shippori Mincho B1","Noto Serif JP",serif;
+  --en:"Cormorant Garamond","Playfair Display",serif;
+  --sans:"Noto Sans JP",sans-serif;
+  --radius:16px;
+  --shadow:0 12px 30px rgba(97,61,133,.07);
+  --shadow-hover:0 20px 42px rgba(97,61,133,.14);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; font-family:var(--sans); font-weight:300; color:var(--ink);
+  background:linear-gradient(180deg,#faf8f4 0%,#f6f1fb 50%,#efe9f5 100%);
+  line-height:1.9; letter-spacing:.02em; overflow-x:hidden;
+}
+img{max-width:100%; display:block;}
+a{color:inherit; text-decoration:none;}
+.kicker{font-family:var(--en); font-weight:600; letter-spacing:.34em; text-transform:uppercase; color:var(--gold-deep); font-size:12px;}
+
+/* ============ LAYOUT ============ */
+.layout{display:block;}
+@media(min-width:1000px){ .layout{display:grid; grid-template-columns:300px 1fr; align-items:start;} }
+
+/* ============ SIDE RAIL (desktop) ============ */
+.siderail{display:none;}
+@media(min-width:1000px){
+  .siderail{
+    display:flex; flex-direction:column; align-items:center;
+    position:sticky; top:0; height:100vh; padding:46px 24px;
+    background:linear-gradient(180deg,rgba(250,248,244,.88),rgba(239,233,245,.88)),url("assets/img/texture-marble.jpg") center/cover;
+    border-right:1px solid var(--rule-lav);
+  }
+  .siderail .logo{width:172px; margin-bottom:8px;}
+  .siderail .rail-kicker{font-family:var(--en); letter-spacing:.3em; font-size:10px; color:var(--gold-deep); text-transform:uppercase; margin-bottom:auto;}
+  .nav{list-style:none; padding:0; margin:42px 0 auto; text-align:center;}
+  .nav li{margin:18px 0;}
+  .nav a{font-family:var(--serif); font-size:15px; letter-spacing:.14em; color:var(--ink); transition:color .25s;}
+  .nav a small{display:block; font-family:var(--en); font-size:9px; letter-spacing:.24em; color:var(--lav-deep); margin-top:3px; text-transform:uppercase;}
+  .nav a:hover, .nav a.current{color:var(--lav-deep);}
+  .rail-mono{width:64px; margin:24px auto 10px;}
+  .rail-est{font-family:var(--en); font-size:10px; letter-spacing:.28em; color:var(--grey); border:1px solid var(--rule-lav); border-radius:999px; padding:3px 12px;}
+}
+
+/* ============ HERO (mobile) ============ */
+.hero{
+  position:relative; min-height:clamp(520px,74vh,720px); display:flex; flex-direction:column; justify-content:center;
+  padding:64px 30px; text-align:center; overflow:hidden;
+  background:linear-gradient(180deg,rgba(74,45,104,.52),rgba(123,104,153,.30) 55%,rgba(74,45,104,.54)),url("assets/img/hero-menu.jpg") center/cover no-repeat;
+}
+.hero .logo{width:198px; margin:0 auto 12px; filter:brightness(1.3) saturate(.9);}
+.hero .h-kicker{font-family:var(--en); letter-spacing:.36em; font-size:12px; color:#ead9bd; text-transform:uppercase; margin-bottom:24px;}
+.hero h1{font-family:var(--serif); font-weight:600; color:#fff; font-size:33px; line-height:1.5; letter-spacing:.08em; margin:0 0 16px; text-shadow:0 2px 20px rgba(30,22,36,.4);}
+.hero p{color:rgba(255,255,255,.9); font-size:13.5px; max-width:30em; margin:0 auto; text-shadow:0 1px 10px rgba(30,22,36,.35);}
+.hero .scroll-cue{margin-top:32px; font-family:var(--en); letter-spacing:.3em; font-size:10px; color:rgba(255,255,255,.85); text-transform:uppercase;}
+.hero .scroll-cue::after{content:""; display:block; width:1px; height:36px; margin:10px auto 0; background:linear-gradient(rgba(255,255,255,.8),transparent);}
+@media(min-width:1000px){ .hero{display:none;} }
+
+/* ============ MENU HEAD ============ */
+.menu-head{padding:70px 5vw 8px;}
+@media(max-width:999px){ .menu-head{padding:54px 28px 8px; text-align:center;} }
+.menu-head .row{display:flex; align-items:flex-end; justify-content:space-between; gap:28px; flex-wrap:wrap;}
+.menu-head h2{font-family:var(--serif); font-weight:600; font-size:38px; letter-spacing:.16em; margin:.22em 0 0;}
+@media(max-width:999px){ .menu-head h2{font-size:29px;} }
+.menu-head .intro{font-size:12.5px; color:var(--grey); max-width:24em; line-height:1.85;}
+.menu-head .index{font-family:var(--en); font-size:18px; letter-spacing:.2em; color:var(--lavender-deep); white-space:nowrap;}
+@media(max-width:999px){
+  .menu-head .row{flex-direction:column; align-items:center; justify-content:center; gap:12px;}
+  .menu-head .intro,.menu-head .index{margin:14px auto 0;}
+}
+
+/* ============ FILTER NAV ============ */
+.filters-cap{text-align:center; padding:22px 5vw 0;}
+.filters-cap .k{font-family:var(--en); font-size:11px; font-weight:600; letter-spacing:.28em; text-transform:uppercase; color:var(--gold-deep);}
+.filters-cap .t{display:block; font-family:var(--serif); font-size:13.5px; color:var(--lav-deep); margin-top:1px; letter-spacing:.06em;}
+@media(min-width:1000px){ .filters-cap{text-align:left;} }
+.filters{display:flex; flex-wrap:wrap; gap:9px; padding:12px 5vw 6px;}
+@media(max-width:999px){ .filters{justify-content:center; padding:12px 16px 4px;} }
+.chip{
+  border:1px solid var(--lavender-mist); background:#fff; color:var(--ink);
+  font-family:var(--serif); font-size:13px; letter-spacing:.04em; padding:9px 17px; border-radius:999px; cursor:pointer; transition:.2s; white-space:nowrap;
+}
+.chip:hover{border-color:var(--lavender); background:var(--lav-bg); color:var(--lavender-deep);}
+.chip.on{background:linear-gradient(135deg,var(--lavender),var(--lav)); color:#fff; border-color:var(--lav); box-shadow:0 6px 14px rgba(97,61,133,.22);}
+
+/* ============ MENU GRID ============ */
+.menu-list{padding:18px 5vw 44px; display:grid; grid-template-columns:1fr; gap:14px;}
+@media(min-width:720px){ .menu-list{grid-template-columns:repeat(2,1fr); gap:16px;} }
+@media(min-width:1280px){ .menu-list{grid-template-columns:repeat(3,1fr); gap:18px;} }
+@media(max-width:520px){ .menu-list{padding:16px 20px 36px;} }
+
+.cat{
+  position:relative; background:#fff; border:1px solid var(--rule-lav); border-radius:var(--radius);
+  padding:18px 20px; box-shadow:var(--shadow); cursor:pointer; transition:transform .2s, box-shadow .2s, border-color .2s;
+  display:grid; grid-template-columns:auto 1fr; column-gap:16px; align-items:center;
+}
+.cat:hover{transform:translateY(-3px); box-shadow:var(--shadow-hover); border-color:var(--lavender);}
+.cat .num{position:absolute; top:13px; right:16px; font-family:var(--en); font-size:13px; font-weight:600; color:var(--gold-deep); letter-spacing:.06em; opacity:.55;}
+.cat .ico{
+  width:62px; height:62px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; overflow:hidden;
+  background:linear-gradient(155deg,#7150a0,#4a2d68);
+  box-shadow:0 7px 16px rgba(74,45,104,.26), inset 0 1px 0 rgba(255,255,255,.14);
+}
+.cat .ico img{width:60px; height:60px;}
+.cat .body{min-width:0;}
+.cat .title{font-family:var(--serif); font-weight:600; font-size:18px; letter-spacing:.03em; margin:0; line-height:1.4; padding-right:26px;}
+.cat .title small{display:block; font-family:var(--en); font-size:10px; letter-spacing:.2em; color:var(--gold-deep); text-transform:uppercase; margin-top:3px; font-weight:600;}
+.cat .desc{font-size:12.5px; color:var(--grey); line-height:1.7; margin:8px 0 0;}
+.cat .meta{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:4px 12px; margin-top:11px;}
+.cat .price{font-family:var(--serif); color:var(--gold-deep); font-size:18px; white-space:nowrap;}
+.cat .price small{font-family:var(--en); font-size:10.5px; letter-spacing:.06em; color:var(--grey); margin-left:5px;}
+.cat .view{flex-shrink:0; font-family:var(--sans); font-size:11px; font-weight:500; letter-spacing:.04em; color:var(--lav); white-space:nowrap; transition:color .2s;}
+.cat:hover .view{color:var(--lavender-deep);}
+.cat:hover .title{color:var(--lav-deep);}
+@media(max-width:420px){
+  .cat{padding:16px; column-gap:13px;}
+  .cat .ico{width:58px; height:58px;} .cat .ico img{width:56px; height:56px;}
+  .cat .title{font-size:16.5px;} .cat .price{font-size:16.5px;}
+}
+
+/* pull quote */
+.pquote{grid-column:1/-1; text-align:center; padding:44px 24px; margin:4px 0; background:linear-gradient(180deg,#efe9f5,#e6dcf2); border:1px solid var(--lavender-mist); border-radius:var(--radius);}
+.pquote .orn{width:190px; margin:0 auto 16px; opacity:.9;}
+.pquote q{font-family:var(--serif); font-weight:600; font-size:22px; letter-spacing:.1em; color:var(--ink); quotes:none; line-height:1.7;}
+.pquote q::before,.pquote q::after{content:"";}
+.pquote cite{display:block; font-family:var(--en); font-style:normal; letter-spacing:.24em; font-size:11px; color:var(--lav-deep); margin-top:12px; text-transform:uppercase;}
+@media(max-width:680px){ .pquote q{font-size:19px;} }
+
+/* ============ FOOTER ============ */
+.footer{
+  background:linear-gradient(180deg,var(--lav-bg),#e6dcf2); border-top:1px solid var(--rule-lav);
+  display:grid; grid-template-columns:auto 1fr 1fr; align-items:center; gap:34px; padding:36px 5vw;
+}
+@media(max-width:999px){ .footer{grid-template-columns:1fr; text-align:center; gap:22px; padding:40px 28px;} }
+.footer .brand{display:flex; align-items:center; gap:14px;}
+@media(max-width:999px){ .footer .brand{flex-direction:column; gap:8px;} }
+.footer .brand .mono{width:54px;}
+.footer .brand .bname{font-family:var(--en); font-size:24px; letter-spacing:.12em; color:var(--gold-deep);}
+.footer .brand .bname small{display:block; font-size:9px; letter-spacing:.26em; color:var(--grey); text-transform:uppercase; margin-top:2px;}
+.footer .fcol h4{font-family:var(--en); letter-spacing:.22em; font-size:11px; color:var(--gold-deep); margin:0 0 8px; text-transform:uppercase;}
+.footer .fcol p{font-size:12px; color:var(--grey); margin:3px 0; line-height:1.7;}
+
+/* ============ MODAL ============ */
+.modal-bg{position:fixed; inset:0; z-index:200; background:rgba(45,38,52,.5); backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px);
+  display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity .28s;}
+.modal-bg.show{opacity:1; pointer-events:auto;}
+.modal{background:var(--ivory); width:100%; max-width:580px; max-height:86vh; border-radius:18px; overflow:hidden;
+  border:1px solid var(--rule-lav); box-shadow:0 30px 70px rgba(43,43,43,.3); display:flex; flex-direction:column;
+  transform:translateY(16px) scale(.98); transition:transform .28s;}
+.modal-bg.show .modal{transform:none;}
+.modal-head{position:relative; text-align:center; padding:30px 24px 18px; background:linear-gradient(180deg,#fff,var(--lav-bg));}
+.modal-kicker{font-family:var(--en); letter-spacing:.28em; font-size:11px; color:var(--gold-deep); text-transform:uppercase;}
+.modal-head h3{font-family:var(--serif); font-weight:600; font-size:23px; letter-spacing:.08em; margin:8px 0 0;}
+.modal-divider{width:48px; height:1px; background:var(--gold); margin:14px auto 0;}
+.modal-x{position:absolute; top:14px; right:16px; width:34px; height:34px; border-radius:50%; border:none; background:#fff;
+  color:var(--ink); font-size:20px; cursor:pointer; box-shadow:0 4px 12px rgba(43,43,43,.12); line-height:1;}
+.modal-list{overflow-y:auto; -webkit-overflow-scrolling:touch; padding:8px 22px 18px;}
+.mcourse{display:flex; justify-content:space-between; gap:16px; align-items:flex-start; padding:16px 2px; border-bottom:1px solid var(--rule-lav);}
+.mcourse:last-child{border-bottom:none;}
+.mc-t{font-family:var(--serif); font-weight:600; font-size:15px; letter-spacing:.03em; line-height:1.5;}
+.mc-d{font-size:11px; color:var(--grey); line-height:1.7; margin-top:5px; max-width:30em;}
+.mc-price{text-align:right; white-space:nowrap; flex-shrink:0;}
+.mc-first{display:block; font-family:var(--serif); color:var(--gold-deep); font-size:15px;}
+.mc-first em{font-style:normal; font-family:var(--en); font-size:10px; letter-spacing:.1em; color:var(--lav-deep); margin-right:5px;}
+.mc-rep{display:block; font-size:11px; color:var(--grey); margin-top:3px;}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ===== SIDE RAIL (desktop) ===== -->
+  <aside class="siderail">
+    <img class="logo" src="assets/img/logo-elegram.png" alt="Elegram">
+    <div class="rail-kicker">Elegant Beauty, Elevated</div>
+    <ul class="nav">
+      <li><a href="#menu" class="current">MENU<small>メニュー</small></a></li>
+      <li><a href="#popular">PHILOSOPHY<small>哲学</small></a></li>
+      <li><a href="#salon">SALON<small>サロン</small></a></li>
+    </ul>
+    <img class="rail-mono" src="assets/img/mark-eg-soft.png" alt="">
+    <div class="rail-est">EST. 2017</div>
+  </aside>
+
+  <main class="main">
+
+    <!-- ===== HERO (mobile) ===== -->
+    <header class="hero">
+      <img class="logo" src="assets/img/logo-elegram.png" alt="Elegram">
+      <div class="h-kicker">Esthetic Salon</div>
+      <h1>美しさは、<br>知性である。</h1>
+      <p>本質を見極め、あなたの内なる輝きを解き放つ。<br>Elegram のエステティック体験。</p>
+      <div class="scroll-cue">Scroll</div>
+    </header>
+
+    <!-- ===== MENU HEAD ===== -->
+    <section id="menu" class="menu-head">
+      <div class="row">
+        <div>
+          <span class="kicker">Menu</span>
+          <h2>メニュー一覧</h2>
+        </div>
+        <p class="intro">確かな技術と、心地よいおもてなし。<br>Elegram のトリートメントが、あなたを次のステージへ導きます。</p>
+        <div class="index">Index&nbsp;&nbsp;01&nbsp;—&nbsp;11</div>
+      </div>
+    </section>
+
+    <!-- ===== FILTER NAV ===== -->
+    <div class="filters-cap"><span class="k">Category</span><span class="t">カテゴリから探す</span></div>
+    <nav class="filters" id="filters">
+      <button class="chip on" data-f="all">すべて</button>
+      <button class="chip" data-f="face">小顔・リフト</button>
+      <button class="chip" data-f="skin">美肌・毛穴</button>
+      <button class="chip" data-f="hair">脱毛</button>
+      <button class="chip" data-f="body">痩身・ボディ</button>
+      <button class="chip" data-f="relax">リラク</button>
+      <button class="chip" data-f="brow">眉</button>
+      <button class="chip" data-f="bridal">ブライダル</button>
+    </nav>
+
+    <!-- ===== CATEGORY LIST ===== -->
+    <section class="menu-list" id="grid">
+
+      <article class="cat" data-group="face" onclick="openCat('イットリフト','It Lift')">
+        <span class="num">01</span>
+        <div class="ico"><img src="assets/icons/icon-itlift.png" alt=""></div>
+        <div class="body">
+          <h3 class="title">イットリフト<small>It Lift</small></h3>
+          <p class="desc">切らずに引き上げる、最新のたるみ・リフトケア。</p>
+          <div class="meta"><span class="price">¥8,800<small>〜 / 30min〜</small></span><span class="view">詳細をみる ›</span></div>
+        </div>
+      </article>
+
+      <article class="cat" data-group="skin" onclick="openCat('プラズマニア','Plasmania')">
+        <span class="num">02</span>
+        <div class="ico"><img src="assets/icons/icon-plasmania.png" alt=""></div>
+        <div class="body">
+          <h3 class="title">プラズマニア<small>Plasmania</small></h3>
+          <p class="desc">肌再生を促す、次世代のプラズマフェイシャル。</p>
+          <div class="meta"><span class="price">¥8,800<small>〜 / 30min〜</small></span><span class="view">詳細をみる ›</span></div>
+        </div>
+      </article>
+
+      <article class="cat" data-group="face" onclick="openCat('瞬間小顔ECS','Instant ECS')">
+        <span class="num">03</span>
+        <div class="ico"><img src="assets/icons/icon-ecs.png" alt=""></div>
+        <div class="body">
+          <h3 class="title">瞬間小顔ECS<small>Instant ECS</small></h3>
+          <p class="desc">高周波と電流で、瞬間的にすっきり小顔へ。</p>
+          <div class="meta"><span class="price">¥8,800<small>〜 / 30min〜</small></span><span class="view">詳細をみる ›</span></div>
+        </div>
+      </article>
+
+      <article class="cat" data-group="face" onclick="openCat('小顔矯正リフトアップ','Face Lift')">
+        <span class="num">04</span>
+        <div class="ico"><img src="assets/icons/icon-facelift.png" alt=""></div>
+        <div class="body">
+          <h3 class="title">小顔矯正リフトアップ<small>Face Lift</small></h3>
+          <p class="desc">骨格から整える、人気No.1の小顔矯正コース。</p>
+          <div class="meta"><span class="price">¥4,400<small>〜 / 30min〜</small></span><span class="view">詳細をみる ›</span></div>
+        </div>
+      </article>
+
+      <article class="cat" data-group="skin" onclick="openCat('お悩み別ピーリング','Peeling')">
+        <span class="num">05</span>
+        <div class="ico"><img src="assets/icons/icon-peeling.png" alt=""></div>
+        <div class="body">
+          <h3 class="title">お悩み別ピーリング<small>Peeling</small></h3>
+          <p class="desc">肌再生・毛穴・くすみ・ニキビ跡まで。フルカスタムの肌質改善。</p>
+          <div class="meta"><span class="price">¥13,200<small>〜 / 60min〜</small></span><span class="view">詳細をみる ›</span></div>
+        </div>
+      </article>
+
+      <article class="cat" data-group="hair" onclick="openCat('美肌脱毛','Hair Removal')">
+        <span class="num">06</span>
+        <div class="ico"><img src="assets/icons/icon-hair-removal.png" alt=""></div>
+        <div class="body">
+          <h3 class="title">美肌脱毛<small>Hair Removal</small></h3>
+          <p class="desc">痛みを抑え、つるんとした美肌へ導く脱毛ケア。</p>
+          <div class="meta"><span class="price">¥1,650<small>〜 / 15min〜</small></span><span class="view">詳細をみる ›</span></div>
+        </div>
+      </article>
+
+      <article class="cat" data-group="skin" onclick="openCat('毛穴・肌質改善','Pore Care')">
+        <span class="num">07</span>
+        <div class="ico"><img src="assets/icons/icon-pore.png" alt=""></div>
+        <div class="body">
+          <h3 class="title">毛穴・肌質改善<small>Pore Care</small></h3>
+          <p class="desc">毛穴の汚れ・黒ずみをリセットする集中ケア。</p>
+          <div class="meta"><span class="price">¥3,300<small>〜 / 30min〜</small></span><span class="view">詳細をみる ›</span></div>
+        </div>
+      </article>
+
+      <article class="cat" data-group="body" onclick="openCat('ボディエステ','Body')">
+        <span class="num">08</span>
+        <div class="ico"><img src="assets/icons/icon-body.png" alt=""></div>
+        <div class="body">
+          <h3 class="title">ボディエステ<small>Body</small></h3>
+          <p class="desc">最新痩身機で、理想のボディラインへ導く。</p>
+          <div class="meta"><span class="price">¥5,500<small>〜 / 30min〜</small></span><span class="view">詳細をみる ›</span></div>
+        </div>
+      </article>
+
+      <article class="cat" data-group="relax" onclick="openCat('リラクゼーション','Relaxation')">
+        <span class="num">09</span>
+        <div class="ico"><img src="assets/icons/icon-relaxation.png" alt=""></div>
+        <div class="body">
+          <h3 class="title">リラクゼーション<small>Relaxation</small></h3>
+          <p class="desc">上質なアロマで深部からほぐす、癒しの時間。</p>
+          <div class="meta"><span class="price">¥4,950<small>〜 / 30min〜</small></span><span class="view">詳細をみる ›</span></div>
+        </div>
+      </article>
+
+      <article class="cat" data-group="brow" onclick="openCat('眉毛スタイリング','Eyebrow')">
+        <span class="num">10</span>
+        <div class="ico"><img src="assets/icons/icon-eyebrow.png" alt=""></div>
+        <div class="body">
+          <h3 class="title">眉毛スタイリング<small>Eyebrow</small></h3>
+          <p class="desc">印象を決める、美しい黄金比の眉デザイン。</p>
+          <div class="meta"><span class="price">¥2,420<small>〜 / 30min〜</small></span><span class="view">詳細をみる ›</span></div>
+        </div>
+      </article>
+
+      <article class="cat" data-group="bridal" onclick="openCat('ブライダルエステ','Bridal')">
+        <span class="num">11</span>
+        <div class="ico"><img src="assets/icons/icon-bridal.png" alt=""></div>
+        <div class="body">
+          <h3 class="title">ブライダルエステ<small>Bridal</small></h3>
+          <p class="desc">晴れの日のための、特別なトータルケア。</p>
+          <div class="meta"><span class="price">無料相談<small>〜 / by appointment</small></span><span class="view">詳細をみる ›</span></div>
+        </div>
+      </article>
+
+      <!-- PULL QUOTE（常にメニュー最下部に表示） -->
+      <figure class="pquote" id="popular">
+        <img class="orn" src="assets/img/quote-ornament.png" alt="">
+        <q>肌を変えることは、<br>明日の自分を変えること。</q>
+        <cite>Elegram Philosophy</cite>
+      </figure>
+
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer id="salon" class="footer">
+      <div class="brand">
+        <img class="mono" src="assets/img/mark-eg-soft.png" alt="">
+        <div class="bname">Elegram<small>Total Esthetic Salon</small></div>
+      </div>
+      <div class="fcol">
+        <h4>Salon Hours</h4>
+        <p>10:00 – 21:00（最終受付20:00）</p>
+        <p>定休日：不定休</p>
+      </div>
+      <div class="fcol">
+        <h4>Salon</h4>
+        <p>和歌山県和歌山市駿河町16 フォルテ南館2F</p>
+        <p>完全予約制 ／ プライベート空間でのご案内</p>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<!-- ===== カテゴリ詳細モーダル ===== -->
+<div class="modal-bg" id="modalBg" onclick="closeCat(event)">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <button class="modal-x" onclick="closeCat()" aria-label="閉じる">&times;</button>
+      <span class="modal-kicker" id="mKicker">Menu</span>
+      <h3 id="mTitle"></h3>
+      <div class="modal-divider"></div>
+    </div>
+    <div class="modal-list" id="mList"></div>
+  </div>
+</div>
+
+<script>
+const MENU_DATA = {"イットリフト":[{"t":"全顔コース(おでこ.目元~顎下.首まで)","d":"※ウルトラエレクトロポレーション付き(高分子美容成分を20倍浸透)","p1":"33,000円","p2":"38,500円"},{"t":"下半顔コース(頬.二重顎.首)","d":"","p1":"22,000円","p2":"27,500円"},{"t":"ほうれい線コース","d":"","p1":"13,500円","p2":"16,500円"},{"t":"フェイスラインコース","d":"","p1":"13,500円","p2":"16,500円"},{"t":"目元周り集中コース","d":"","p1":"8,800円","p2":"11,000円"}],"プラズマニア":[{"t":"プラズマニア全顔(60分) 1回","d":"","p1":"お試し 13,200円","p2":"22,000円"},{"t":"プラズマニア部分ケア(30分)","d":"","p1":"8,800円","p2":"13,200円"},{"t":"プラズマニアセット","d":"ハーブピーリングや光フォトと一緒にOK","p1":"プラズマDDS 11,000円","p2":"プラズマDDS 11,000円"}],"瞬間小顔ECS":[{"t":"瞬間小顔ECSコース(30分)","d":"Y字・円盤の2つの電流アプローチからお好きなものを1つお選びいただけます。","p1":"8,800円","p2":"11,000円"},{"t":"瞬間小顔ECSコース(40分)","d":"Y字・円盤・ハンドの3つの電流アプローチからお好きなものを2つお選びいただけます。","p1":"14,300円","p2":"22,000円"},{"t":"瞬間小顔ECSコース(60分)","d":"Y字・円盤・ハンドの3つの電流アプローチを受けられるスペシャルコースです。","p1":"19,800円","p2":"33,000円"}],"小顔矯正リフトアップ":[{"t":"リフトアップコース","d":"当店人気No.1。小顔矯正で輪郭矯正し、即効性のある小顔に！","p1":"4,400円","p2":"8,800円"},{"t":"むくみデトックスコース","d":"小顔矯正＋顔、首、肩、デコルテのオイルトリートメント！","p1":"11,000円","p2":"14,300円"},{"t":"脂肪分解コース","d":"小顔矯正＋脂肪分解ラジオ波でV字輪郭！","p1":"13,200円","p2":"16,500円"},{"t":"切らない系リフトコース","d":"小顔矯正＋高周波ECSリフトアップで瞬間小顔！肌のハリ艶もアップ！","p1":"16,500円","p2":"19,800円"},{"t":"プレミアムリフトアップ","d":"小顔矯正＋脂肪分解ラジオ波＋高周波ECSリフトアップで医療レベルの最高小顔に！","p1":"25,000円","p2":"35,000円"},{"t":"瞬間小顔ECSコース","d":"和歌山初導入の高周波で表情筋を引き締め、むくみ・たるみを即効改善。","p1":"14,300円","p2":"22,000円"},{"t":"ラジオ波リフトアップ","d":"痛みがなく、若々しい肌に！<br>脂肪分解で下がり気味の頬にアプローチ！","p1":"5,500円","p2":"7,700円"}],"美肌脱毛":[{"t":"全身脱毛＋顔＋VIO","d":"顔から足先まで、VIOも含むパーフェクトな全身脱毛コース。","p1":"22,000円<br>(男性:27,500円)","p2":"22,000円<br>(男性:27,500円)"},{"t":"全身脱毛＋顔ありVIOなし","d":"VIOを除く、顔を含む全身脱毛コース。","p1":"19,800円","p2":"19,800円"},{"t":"全身脱毛＋顔なしVIOあり","d":"顔を除く、VIOを含む全身脱毛コース。","p1":"20,900円","p2":"20,900円"},{"t":"全身脱毛のみ","d":"顔とVIOを除く全身脱毛コース。","p1":"17,600円<br>(男性:19,800円)","p2":"17,600円<br>(男性:19,800円)"},{"t":"Sパーツ","d":"両脇・両足指甲・鼻下・両ひざ・両手指甲から1箇所お選び頂けます。","p1":"2,640円","p2":"2,640円"},{"t":"Mパーツ","d":"V・I・O・肩・うなじ・お腹・ヒップから1箇所お選び頂けます。","p1":"3,520円","p2":"3,520円"},{"t":"Lパーツ","d":"両胸乳輪・両ひざ上・両ひざ下・両ひじ上・両ひじ下・背中上・背中下から1箇所。","p1":"4,950円","p2":"4,950円"},{"t":"VIOセット","d":"デリケートゾーン（Vライン・Iライン・Oライン）のセット脱毛。","p1":"6,600円","p2":"6,600円"},{"t":"顔脱毛","d":"化粧ノリがアップする全顔脱毛コース。","p1":"5,500円","p2":"5,500円"},{"t":"男性ヒゲ脱毛","d":"毎日の髭剃りが楽になる、男性専用ヒゲ脱毛。","p1":"6,600円","p2":"6,600円"},{"t":"キッズ脱毛","d":"S.M.Lパーツごとに脱毛可能！肌に優しいモードで照射します。","p1":"1,650〜円","p2":"1,650〜円"}],"お悩み別ピーリング":[{"t":"肌再生ハーブピーリング(HAAB)","d":"肌再生！ツヤ肌＆毛穴・ニキビ跡・くすみケア！","p1":"19,800円","p2":"33,000円"},{"t":"肌再生ハーブピーリング(剥離あり)","d":"剥離で古い角質をオフし、肌再生をサポート。透明感とふっくら肌へ。","p1":"16,500円","p2":"33,000円"},{"t":"エクソソームピーリング","d":"ダーマペンのエステ版！エクソソームで細胞レベルから肌再生をサポート！","p1":"22,000円","p2":"33,000円"},{"t":"赤み/敏感肌ピーリング","d":"乳酸菌で角質ケア＆肌バランス整え、敏感肌でも安心！（アンストレス）","p1":"13,200円","p2":"22,000円"},{"t":"ニキビ/ニキビ跡ピーリング","d":"炎症も角質も改善！ニキビ知らずの柔らか肌に！（ビオフィート）","p1":"13,200円","p2":"22,000円"},{"t":"美白くすみピーリング","d":"高濃度美白成分でシミ・色ムラをケア。（イラストリアス）","p1":"16,500円","p2":"22,000円"},{"t":"アンチエイジングピーリング","d":"最高の若返りピーリング！ハリ、弾力が蘇ります！","p1":"19,800円","p2":"33,000円"},{"t":"陶肌トリートメント","d":"300種類の酵素と３種の植物幹細胞で無理なく自然に美しい肌へ！","p1":"13,200円","p2":"13,200円"},{"t":"ガリレオピーリング","d":"強炭酸×多成分で肌活性！短時間で透明感・弾力・ツヤのある肌へ。","p1":"13,200円","p2":"16,500円"}],"毛穴・肌質改善":[{"t":"毛穴洗浄コース","d":"毛穴な汚れが気になる方へ。","p1":"6,600円","p2":"13,200円"},{"t":"毛穴洗浄ピーリングコース","d":"頑固な黒ずみ、毛穴詰まりをリセット。","p1":"8,250円","p2":"16,500円"},{"t":"光フォト美肌(ベーシック)","d":"特殊な光で肌のハリ・ツヤアップ！（気になる部分のみ）","p1":"3,300円","p2":"5,500円"},{"t":"光フォト美肌(スタンダード)","d":"特殊な光で肌のハリ・ツヤアップ！（顔全体）","p1":"8,250円","p2":"16,500円"},{"t":"光フォト美肌(プレミアム)","d":"特殊な光で肌のハリ・ツヤアップ！（顔全体・W打ち）","p1":"11,000円","p2":"22,000円"}],"ボディエステ":[{"t":"全身痩せコース","d":"最新痩身機で脂肪細胞にアプローチし全身のサイズダウン。","p1":"16,500円","p2":"33,000円"},{"t":"お腹痩せコース","d":"最新痩身機でお腹の筋肉を引き締め、たるみ、くびれにアプローチ","p1":"8,800円","p2":"16,500円"},{"t":"上半身痩せコース","d":"最新痩身機で背中・二の腕の脂肪細胞にアプローチ","p1":"8,800円","p2":"16,500円"},{"t":"下半身痩せコース","d":"最新痩身機でもも・ふくらはぎの脂肪細胞にアプローチ","p1":"8,800円","p2":"16,500円"},{"t":"お腹ぽっこりメソット","d":"インナーマッスル・アウターマッスルどちらにも強力アプローチ","p1":"14,300円","p2":"22,000円"},{"t":"バストアップコース","d":"理想のバストへ。オーダーメイド施術でキレイにしっかりバストアップ","p1":"11,000円","p2":"14,300円"},{"t":"ヒップアップコース","d":"お尻の脂肪細胞に最新痩身機でアプローチ。","p1":"5,500円","p2":"8,250円"}],"リラクゼーション":[{"t":"全身オイルリンパマッサージコース(60分)","d":"上質アロマオイルのリンパリラクゼーション","p1":"6,600円","p2":"7,700円"},{"t":"全身オイルリンパマッサージコース(90分)","d":"上質アロマオイルのリンパリラクゼーション","p1":"9,900円","p2":"11,000円"},{"t":"首・肩マッサージコース","d":"ストレートネック、肩こり、首こりに悩んでる方におすすめ","p1":"5,500円","p2":"8,250円"},{"t":"ふくらはぎスッキリ","d":"むくみ・冷え症の方におすすめ。足裏からふくらはぎ・膝にかけて。","p1":"4,950円","p2":"7,700円"},{"t":"腰痛マッサージコース","d":"凝り固まった腰にしっかりアプローチ。","p1":"5,500円","p2":"8,250円"},{"t":"打たない肩ボトックス","d":"高周波、直電流により筋肉細胞にアプローチ。","p1":"9,900円","p2":"13,200円"},{"t":"自律神経改善コース","d":"回復電流で身体のイオンバランスを整えることができます","p1":"5,500円","p2":"5,500円"}],"眉毛スタイリング":[{"t":"HBL(ハリウッドブロウリフト)","d":"眉の生えぐせを根本から改善。毛穴の流れを整えあらゆる眉のお悩みを解決！","p1":"8,400円","p2":"8,400円"},{"t":"眉毛スタイリング","d":"眉毛デザイン、整えスタイリングしやすくします","p1":"2,420円","p2":"2,420円"},{"t":"眉毛スタイリング＋WAX脱毛","d":"眉毛のデザイン＋WAX脱毛","p1":"6,270円","p2":"6,270円"}],"ブライダルエステ":[{"t":"無料ブライダルエステ相談","d":"挙式までのエステプランをご希望に合わせてプランニング。","p1":"0円","p2":"0円"},{"t":"小顔フェイシャルコース","d":"小顔になりたい！など悩みに合ったおすすめ体験ができるコース","p1":"5,500円","p2":"5,500円"},{"t":"美白フェイシャルコース","d":"毛穴の悩みや美白になりたい！など悩みに合ったおすすめ体験ができるコース","p1":"5,500円","p2":"5,500円"},{"t":"小顔×美肌フェイシャルコース","d":"小顔も美肌の悩みも両方体験できるコース","p1":"9,900円","p2":"9,900円"},{"t":"二の腕スッキリコース","d":"ドレスから見えるデコルテから二の腕をマシンとハンドでスッキリ！","p1":"8,800円","p2":"8,800円"},{"t":"背中ニキビ美白コース","d":"背中のニキビや肌荒れ、美白が叶う背中集中ケア","p1":"8,800円","p2":"8,800円"},{"t":"フェイシャル×ボディーコース","d":"ドレス姿を引き立てる背中、デコルテ、二の腕をスッキリ・小顔ケアのブライダルトータルプラン","p1":"9,900円","p2":"9,900円"},{"t":"歯のホワイトニング","d":"15min×3回。輝く白い歯で最高の笑顔を。","p1":"5,500円","p2":"5,500円"}]};
+function openCat(name,en){
+  const courses = MENU_DATA[name];
+  if(!courses || !courses.length) return;
+  document.getElementById('mKicker').textContent = en || 'Menu';
+  document.getElementById('mTitle').textContent = name;
+  document.getElementById('mList').innerHTML = courses.map(function(c){
+    const p1=(c.p1||'').replace(/<br\s*\/?>/g,' ');
+    const p2=(c.p2||'').replace(/<br\s*\/?>/g,' ');
+    const same = !p2 || p1===p2;
+    const price = same
+      ? '<span class="mc-first">'+p1+'</span>'
+      : '<span class="mc-first"><em>初回</em>'+p1+'</span><span class="mc-rep">2回目以降 '+p2+'</span>';
+    return '<div class="mcourse"><div class="mc-main"><div class="mc-t">'+c.t+'</div>'+(c.d?'<div class="mc-d">'+c.d+'</div>':'')+'</div><div class="mc-price">'+price+'</div></div>';
+  }).join('');
+  document.getElementById('modalBg').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeCat(e){
+  if(e && e.target && e.target.closest && e.target.closest('.modal')) return;
+  document.getElementById('modalBg').classList.remove('show');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeCat(); });
+
+/* ===== カテゴリ・フィルター ===== */
+document.querySelectorAll('.chip').forEach(function(chip){
+  chip.addEventListener('click',function(){
+    document.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('on'); });
+    chip.classList.add('on');
+    var f = chip.getAttribute('data-f');
+    document.querySelectorAll('#grid .cat').forEach(function(card){
+      var show = (f==='all') || (card.getAttribute('data-group')===f);
+      card.style.display = show ? '' : 'none';
+    });
+  });
+});
+</script>
+</body>
+</html>
